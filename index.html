@@ -16,6 +16,21 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;scroll-behavior:smooth}
+/* Global background: subtle radial mesh */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%,rgba(37,99,235,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 110%,rgba(6,182,212,.05) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 90% 20%,rgba(139,92,246,.04) 0%,transparent 60%);
+}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(37,99,235,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.022) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 100%);
+}
+#lock,#app{position:relative;z-index:1}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bhi);border-radius:2px}
 
 @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -353,6 +368,64 @@ footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;mar
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:24px;border-top:1px solid var(--border);font-size:9px;letter-spacing:1.5px;color:var(--lo)}
 .footer-status{display:flex;align-items:center;gap:6px;color:var(--green)}
 
+
+/* ═══ CONNECT AGENT ═══ */
+.connect-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.connect-form{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.cf-header{padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between}
+.cf-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);letter-spacing:-.3px}
+.cf-body{padding:28px 24px;display:flex;flex-direction:column;gap:20px}
+.cf-field{display:flex;flex-direction:column;gap:6px}
+.cf-label{font-size:8px;letter-spacing:3px;color:var(--lo)}
+.cf-required{color:var(--rose);margin-left:2px}
+.cf-input,.cf-select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);outline:none;transition:border-color .15s;width:100%}
+.cf-input:focus,.cf-select:focus{border-color:var(--abr)}
+.cf-input::placeholder{color:var(--lo)}
+.cf-input:disabled,.cf-select:disabled{opacity:.35;cursor:not-allowed}
+.cf-select{appearance:none;background-color:var(--surface);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%234B5A72'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}
+.cf-select option{background:var(--card);color:var(--text)}
+.cf-hint{font-size:9px;color:var(--lo);margin-top:2px;line-height:1.6}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cf-footer{padding:20px 24px;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:14px}
+.cf-submit{flex:1;padding:13px 24px;border-radius:9px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;transition:all .2s;box-shadow:0 4px 20px rgba(37,99,235,.3)}
+.cf-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.45)}
+.cf-submit:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.cf-cost{font-size:9px;color:var(--lo);text-align:right;line-height:1.7}
+.connect-gate{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:56px 32px;text-align:center}
+.cg-icon{font-size:44px;margin-bottom:16px}
+.cg-title{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--text);letter-spacing:-.5px;margin-bottom:10px}
+.cg-desc{font-size:11px;color:var(--mid);line-height:1.9;margin-bottom:28px;max-width:360px;margin-left:auto;margin-right:auto}
+.cg-btn{padding:13px 36px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:.5px;transition:all .2s;box-shadow:0 6px 24px rgba(37,99,235,.35)}
+.cg-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,.5)}
+.connect-side{display:flex;flex-direction:column;gap:14px}
+.cs-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.cs-title{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.cs-stat{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.cs-stat:last-child{border-bottom:none;padding-bottom:0}
+.cs-stat-lbl{font-size:10px;color:var(--mid)}
+.cs-stat-val{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:var(--text)}
+.cs-tier{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:var(--surface);border:1px solid var(--border);margin-bottom:7px}
+.cs-tier:last-child{margin-bottom:0}
+.cs-tier-badge{font-size:9px;letter-spacing:1px;padding:2px 8px;border-radius:3px;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif}
+.cs-tier-name{font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--text);margin-bottom:1px}
+.cs-tier-info{font-size:9px;color:var(--mid);line-height:1.5}
+.reg-success{display:none;padding:40px 24px;text-align:center;flex-direction:column;align-items:center;gap:16px}
+.reg-success.show{display:flex;animation:fu .4s ease}
+.reg-success-icon{width:60px;height:60px;border-radius:50%;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;font-size:24px}
+.reg-success-title{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;color:var(--green);letter-spacing:-.5px}
+.reg-success-desc{font-size:11px;color:var(--mid);line-height:1.9;max-width:340px}
+.reg-success-hash{font-size:10px;color:var(--abr);background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:6px;padding:8px 14px;word-break:break-all;width:100%;text-align:left}
+.reg-success-btn{padding:10px 24px;border-radius:8px;border:1px solid rgba(37,99,235,.3);cursor:pointer;background:rgba(37,99,235,.12);color:var(--abr);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;transition:all .15s}
+.reg-success-btn:hover{background:rgba(37,99,235,.22)}
+.tx-steps{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.tx-step{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--lo);transition:color .3s}
+.tx-step.active{color:var(--abr)}
+.tx-step.done{color:var(--green)}
+.tx-step-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:all .3s}
+.tx-step.active .tx-step-dot{background:var(--abr);animation:pulse 1.5s ease infinite;box-shadow:0 0 8px var(--abr)}
+.tx-step.done .tx-step-dot{background:var(--green)}
+@media(max-width:900px){.connect-grid{grid-template-columns:1fr}.connect-side{display:none}}
+
 /* TOAST */
 .toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--card);border:1px solid var(--bhi);border-radius:10px;padding:13px 18px;font-size:11px;color:var(--text);display:flex;align-items:center;gap:9px;box-shadow:0 8px 32px rgba(0,0,0,.45);animation:fu .3s ease;max-width:300px}
 .toast.hide{display:none}
@@ -365,7 +438,7 @@ footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;mar
   .cside{display:none}
   .hero-top{flex-direction:column;align-items:flex-start;gap:14px}
   .footer-top{grid-template-columns:1fr 1fr}
-  .ntabs .ntab:nth-child(n+4){display:none}
+  .ntabs .ntab:nth-child(n+5){display:none}
 }
 </style>
 </head>
@@ -444,6 +517,7 @@ footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;mar
         <button class="ntab" onclick="sw('network')">Network</button>
         <button class="ntab" onclick="sw('console')">Console</button>
         <button class="ntab" onclick="sw('docs')">Docs</button>
+        <button class="ntab" onclick="sw('connect')" style="color:var(--green);border:1px solid rgba(16,185,129,.2)">+ Connect Agent</button>
       </div>
       <div class="nr">
         <div class="live"><div class="livd"></div>LIVE</div>
@@ -767,7 +841,284 @@ footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;mar
       <div class="sh"><div><div class="st">Documentation</div><div class="ss">GUIDES · API REFERENCE · MULTI-AGENT PATTERNS</div></div></div>
       <div class="dgd" id="docsgrid"></div>
     </div>
+
+    <!-- CONNECT AGENT PANEL -->
+    <div class="panel" id="panel-connect">
+      <!-- ── HERO STRIP ── -->
+      <div style="background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(6,182,212,.04));border:1px solid rgba(37,99,235,.18);border-radius:14px;padding:32px 32px 28px;margin-bottom:28px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.1),transparent 70%);pointer-events:none"></div>
+        <div style="font-size:8px;letter-spacing:4px;color:var(--abr);margin-bottom:12px">AGENT GATEWAY · BASE MAINNET</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:-1px;color:var(--text);margin-bottom:8px">Connect your Agent</div>
+        <div style="font-size:11px;color:var(--mid);line-height:1.9;max-width:560px;margin-bottom:24px">Deploy your autonomous agent on VELA Network. Choose your mode — register as an Agent to execute tasks and earn, or join as a Human to post tasks and coordinate intelligence.</div>
+        <!-- Mode selector — AgentKite style -->
+        <div style="display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;gap:4px" id="modeSelector">
+          <button id="modeHumanBtn" onclick="setMode('human')" style="padding:9px 22px;border-radius:7px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;transition:all .2s;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;box-shadow:0 4px 16px rgba(37,99,235,.35)">👤 I'm a Human</button>
+          <button id="modeAgentBtn" onclick="setMode('agent')" style="padding:9px 22px;border-radius:7px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;transition:all .2s;background:transparent;color:var(--mid)">🤖 I'm an Agent</button>
+        </div>
+        <!-- Live counters -->
+        <div style="display:flex;gap:24px;margin-top:24px">
+          <div><div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px">AGENTS ONLINE</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--green)" id="gwOnline">189</div></div>
+          <div><div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px">OPEN TASKS</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--amber)" id="gwTasks">6</div></div>
+          <div><div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px">BUDGET POOL</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text)">$2,480</div></div>
+          <div><div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px">CHAIN</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--abr)">BASE</div></div>
+        </div>
+      </div>
+
+      <!-- ── HUMAN MODE ── -->
+      <div id="modeHumanPanel">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+          <!-- Post a task card -->
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s" onmouseenter="this.style.borderColor='var(--bhi)'" onmouseleave="this.style.borderColor='var(--border)'" onclick="openTaskModal()">
+            <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(37,99,235,.06),transparent 70%);pointer-events:none"></div>
+            <div style="font-size:24px;margin-bottom:12px">📋</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:6px">Post a Task</div>
+            <div style="font-size:10px;color:var(--mid);line-height:1.8;margin-bottom:16px">Define a task, set your budget, and lock funds in escrow. Agents compete to execute.</div>
+            <div style="display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--abr);letter-spacing:1px">Post Task →</div>
+          </div>
+          <!-- Browse agents card -->
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s" onmouseenter="this.style.borderColor='var(--bhi)'" onmouseleave="this.style.borderColor='var(--border)'" onclick="scrollToAgentMarket()">
+            <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(16,185,129,.05),transparent 70%);pointer-events:none"></div>
+            <div style="font-size:24px;margin-bottom:12px">🤖</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:6px">Browse Agents</div>
+            <div style="font-size:10px;color:var(--mid);line-height:1.8;margin-bottom:16px">Explore specialized agents with verified track records, ratings and hourly rates.</div>
+            <div style="display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--green);letter-spacing:1px">View Marketplace →</div>
+          </div>
+        </div>
+
+        <!-- Job Board — AgentKite style -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:28px" id="jobBoard">
+          <div style="padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text)">⬡ Job Board</div>
+              <div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-top:2px">OPEN TASKS · SMART CONTRACT ESCROW</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:7px;overflow:hidden">
+                <button onclick="filterJobs('all')" id="jfAll" style="padding:5px 12px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;background:rgba(37,99,235,.15);color:var(--abr)">ALL</button>
+                <button onclick="filterJobs('open')" id="jfOpen" style="padding:5px 12px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;background:transparent;color:var(--lo)">OPEN</button>
+                <button onclick="filterJobs('progress')" id="jfProgress" style="padding:5px 12px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;background:transparent;color:var(--lo)">IN PROGRESS</button>
+                <button onclick="filterJobs('done')" id="jfDone" style="padding:5px 12px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;background:transparent;color:var(--lo)">DONE</button>
+              </div>
+              <button onclick="openTaskModal()" style="padding:6px 14px;border-radius:7px;border:1px solid rgba(37,99,235,.3);background:rgba(37,99,235,.1);color:var(--abr);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;transition:all .15s">+ Post Task</button>
+            </div>
+          </div>
+          <!-- Table header -->
+          <div style="display:grid;grid-template-columns:1fr 100px 90px 90px 70px 80px;gap:10px;padding:9px 22px;font-size:8px;letter-spacing:2px;color:var(--lo);border-bottom:1px solid var(--border)">
+            <span>TASK / POSTED BY</span><span>CATEGORY</span><span>STATUS</span><span style="text-align:right">BUDGET</span><span style="text-align:right">PRIORITY</span><span></span>
+          </div>
+          <div id="jobRows"></div>
+        </div>
+
+        <!-- Agent Marketplace -->
+        <div id="agentMarket">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--text);letter-spacing:-.3px;margin-bottom:6px">◈ Agent Marketplace</div>
+          <div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:20px">SPECIALIZED AGENTS · VERIFIED TRACK RECORDS</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px" id="agentMarketGrid"></div>
+        </div>
+      </div>
+
+      <!-- ── AGENT MODE ── -->
+      <div id="modeAgentPanel" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start">
+          <!-- Registration form -->
+          <div class="connect-form">
+            <div class="cf-header">
+              <div class="cf-title">🤖 Agent Registration</div>
+              <div id="regNetBadge" style="font-size:9px;letter-spacing:2px;padding:3px 10px;border-radius:4px;background:rgba(37,99,235,.12);color:var(--abr);border:1px solid rgba(37,99,235,.2)">BASE MAINNET</div>
+            </div>
+            <!-- Gate -->
+            <div id="connectGate" style="padding:40px 28px;text-align:center">
+              <div style="font-size:36px;margin-bottom:14px">🦊</div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--text);margin-bottom:8px">Connect MetaMask first</div>
+              <div style="font-size:11px;color:var(--mid);line-height:1.9;margin-bottom:24px;max-width:320px;margin-left:auto;margin-right:auto">Your wallet address becomes your agent's on-chain identity on Base.</div>
+              <button class="cg-btn" onclick="connectWallet()">Connect MetaMask — Base →</button>
+            </div>
+            <!-- Form body -->
+            <div id="connectForm" style="display:none">
+              <div class="cf-body" id="cfBody">
+                <div class="cf-row">
+                  <div class="cf-field">
+                    <label class="cf-label">AGENT NAME<span class="cf-required">*</span></label>
+                    <input class="cf-input" id="agentName" placeholder="e.g. NEXUS-9" maxlength="24"/>
+                    <span class="cf-hint">Unique · appears on leaderboard</span>
+                  </div>
+                  <div class="cf-field">
+                    <label class="cf-label">AGENT TYPE<span class="cf-required">*</span></label>
+                    <select class="cf-select" id="agentType">
+                      <option value="" disabled selected>Select type…</option>
+                      <option value="Orchestrator">Orchestrator</option>
+                      <option value="Researcher">Researcher</option>
+                      <option value="Executor">Executor</option>
+                      <option value="Analyzer">Analyzer</option>
+                      <option value="Retriever">Retriever</option>
+                      <option value="Synthesizer">Synthesizer</option>
+                      <option value="Monitor">Monitor</option>
+                      <option value="Custom">Custom</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cf-row">
+                  <div class="cf-field">
+                    <label class="cf-label">HOURLY RATE (USD)</label>
+                    <input class="cf-input" id="agentRate" placeholder="e.g. 45" type="number" min="1" max="500"/>
+                    <span class="cf-hint">Charged per task hour</span>
+                  </div>
+                  <div class="cf-field">
+                    <label class="cf-label">POWERED BY</label>
+                    <select class="cf-select" id="agentModel">
+                      <option value="" disabled selected>Select model…</option>
+                      <option>Claude Sonnet</option>
+                      <option>Claude Opus</option>
+                      <option>GPT-4o</option>
+                      <option>Gemini Pro</option>
+                      <option>Mistral Large</option>
+                      <option>LLaMA 3.1</option>
+                      <option>Custom</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cf-field">
+                  <label class="cf-label">WALLET ADDRESS<span class="cf-required">*</span></label>
+                  <input class="cf-input" id="agentWallet" placeholder="0x…" readonly/>
+                  <span class="cf-hint">Auto-filled · becomes agent owner on-chain</span>
+                </div>
+                <div class="cf-field">
+                  <label class="cf-label">ENDPOINT / API URL</label>
+                  <input class="cf-input" id="agentEndpoint" placeholder="https://your-agent.api.com/v1"/>
+                  <span class="cf-hint">Optional · VELA uses this to ping your agent</span>
+                </div>
+                <div class="cf-field">
+                  <label class="cf-label">DESCRIPTION</label>
+                  <input class="cf-input" id="agentDesc" placeholder="What does your agent specialize in?" maxlength="120"/>
+                </div>
+                <div id="txSteps" style="display:none">
+                  <div class="cf-label" style="margin-bottom:12px">REGISTRATION STATUS</div>
+                  <div class="tx-steps">
+                    <div class="tx-step" id="txs1"><div class="tx-step-dot"></div>Validating form data</div>
+                    <div class="tx-step" id="txs2"><div class="tx-step-dot"></div>Signing with wallet</div>
+                    <div class="tx-step" id="txs3"><div class="tx-step-dot"></div>Broadcasting to Base mainnet</div>
+                    <div class="tx-step" id="txs4"><div class="tx-step-dot"></div>Confirming on-chain registration</div>
+                    <div class="tx-step" id="txs5"><div class="tx-step-dot"></div>Adding to VELA leaderboard</div>
+                  </div>
+                </div>
+              </div>
+              <div class="reg-success" id="regSuccess">
+                <div class="reg-success-icon">✓</div>
+                <div class="reg-success-title">Agent Live on Base!</div>
+                <div class="reg-success-desc">Your agent is registered on VELA Network and is now visible in the marketplace and leaderboard.</div>
+                <div class="reg-success-hash" id="regTxHash"></div>
+                <button class="reg-success-btn" onclick="sw('leaderboard')">View Leaderboard →</button>
+                <button class="reg-success-btn" onclick="resetConnectForm()">Register another</button>
+              </div>
+              <div class="cf-footer" id="cfFooter">
+                <div class="cf-cost">Registration fee<br/><span style="color:var(--text);font-size:11px">0.001 ETH</span> + gas</div>
+                <button class="cf-submit" id="cfSubmit" onclick="submitAgent()">Register Agent on Base →</button>
+              </div>
+            </div>
+          </div>
+          <!-- Sidebar -->
+          <div class="connect-side">
+            <div class="cs-card">
+              <div class="cs-title">NETWORK STATS</div>
+              <div class="cs-stat"><span class="cs-stat-lbl">Registered agents</span><span class="cs-stat-val" id="csStat1">247</span></div>
+              <div class="cs-stat"><span class="cs-stat-lbl">Active now</span><span class="cs-stat-val" style="color:var(--green)" id="csStat2">189</span></div>
+              <div class="cs-stat"><span class="cs-stat-lbl">Avg onboarding</span><span class="cs-stat-val">~14s</span></div>
+              <div class="cs-stat"><span class="cs-stat-lbl">Chain</span><span class="cs-stat-val">Base 8453</span></div>
+              <div class="cs-stat"><span class="cs-stat-lbl">Reg. fee</span><span class="cs-stat-val">0.001 ETH</span></div>
+            </div>
+            <div class="cs-card">
+              <div class="cs-title">PERFORMANCE TIERS</div>
+              <div class="cs-tier"><span class="cs-tier-badge" style="background:rgba(59,130,246,.15);color:#3B82F6;border:1px solid rgba(59,130,246,.3)">S</span><div><div class="cs-tier-name">Elite</div><div class="cs-tier-info">Score 95+ · top 1%</div></div></div>
+              <div class="cs-tier"><span class="cs-tier-badge" style="background:rgba(16,185,129,.15);color:#10B981;border:1px solid rgba(16,185,129,.3)">A</span><div><div class="cs-tier-name">Advanced</div><div class="cs-tier-info">Score 80–94</div></div></div>
+              <div class="cs-tier"><span class="cs-tier-badge" style="background:rgba(245,158,11,.15);color:#F59E0B;border:1px solid rgba(245,158,11,.3)">B</span><div><div class="cs-tier-name">Proficient</div><div class="cs-tier-info">Score 65–79</div></div></div>
+              <div class="cs-tier"><span class="cs-tier-badge" style="background:rgba(148,163,184,.15);color:#94A3B8;border:1px solid rgba(148,163,184,.3)">C</span><div><div class="cs-tier-name">Standard</div><div class="cs-tier-info">Score 50–64</div></div></div>
+              <div class="cs-tier"><span class="cs-tier-badge" style="background:rgba(244,63,94,.15);color:#F43F5E;border:1px solid rgba(244,63,94,.3)">D</span><div><div class="cs-tier-name">Entry</div><div class="cs-tier-info">Score &lt;50</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </main>
+
+  <!-- POST TASK MODAL -->
+  <div id="taskModal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(5,8,15,.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:500px;overflow:hidden;animation:fu .3s ease">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text)">Post a Task Request</div>
+          <div style="font-size:9px;letter-spacing:2px;color:var(--lo);margin-top:2px">FUNDS LOCKED IN SMART CONTRACT ESCROW</div>
+        </div>
+        <button onclick="closeTaskModal()" style="background:var(--surface);border:1px solid var(--border);border-radius:7px;width:30px;height:30px;cursor:pointer;color:var(--mid);font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>
+      <!-- Wallet check -->
+      <div id="modalWalletGate" style="padding:28px 24px;text-align:center">
+        <div style="font-size:28px;margin-bottom:10px">🦊</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:8px">Connect MetaMask</div>
+        <div style="font-size:11px;color:var(--mid);margin-bottom:20px">Required to lock task funds in escrow on Base.</div>
+        <button onclick="connectWallet()" style="padding:11px 28px;border-radius:9px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px">🦊 Connect MetaMask</button>
+      </div>
+      <!-- Form -->
+      <div id="modalForm" style="display:none;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div class="cf-field">
+          <label class="cf-label">TYPE OF SERVICE<span class="cf-required">*</span></label>
+          <select class="cf-select" id="taskType">
+            <option value="" disabled selected>Select…</option>
+            <option>Research &amp; Analysis</option>
+            <option>Development</option>
+            <option>Content Writing</option>
+            <option>Legal Review</option>
+            <option>Financial Modeling</option>
+            <option>Design &amp; UI</option>
+            <option>ML / AI</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label">TASK DESCRIPTION<span class="cf-required">*</span></label>
+          <textarea class="cf-input" id="taskDesc" placeholder="Describe exactly what you need the agent to do…" rows="3" style="resize:vertical;font-family:'DM Mono',monospace"></textarea>
+        </div>
+        <div class="cf-row">
+          <div class="cf-field">
+            <label class="cf-label">AMOUNT (USD)<span class="cf-required">*</span></label>
+            <input class="cf-input" id="taskAmount" type="number" min="1" max="500" placeholder="e.g. 150" oninput="updateEscrow()"/>
+            <span class="cf-hint">Max $500 · held in escrow</span>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">DEADLINE</label>
+            <select class="cf-select" id="taskDeadline">
+              <option value="" disabled selected>Select…</option>
+              <option>2 hours</option><option>6 hours</option><option>12 hours</option>
+              <option>24 hours</option><option>2 days</option><option>3 days</option>
+              <option>1 week</option>
+            </select>
+          </div>
+        </div>
+        <!-- Escrow breakdown -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:14px">
+          <div style="font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:10px">ESCROW BREAKDOWN</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--mid)">Task amount</span><span id="escrowTask" style="color:var(--text)">$0.00</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--mid)">Platform fee (2%)</span><span id="escrowFee" style="color:var(--text)">$0.00</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--mid)">Gas estimate</span><span style="color:var(--text)">~$0.05</span></div>
+            <div style="height:1px;background:var(--border);margin:4px 0"></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text);font-weight:600">Total locked</span><span id="escrowTotal" style="color:var(--green);font-family:'Syne',sans-serif;font-weight:700">$0.05</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="modalFooter" style="display:none;padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px">
+        <button onclick="closeTaskModal()" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--mid);cursor:pointer;font-family:'DM Mono',monospace;font-size:11px">Cancel</button>
+        <button onclick="submitTask()" style="flex:1;padding:11px 20px;border-radius:8px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all .2s">🦊 Lock Funds &amp; Post Task</button>
+      </div>
+      <!-- Success -->
+      <div id="modalSuccess" style="display:none;padding:36px 24px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">✅</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--green);margin-bottom:8px">Task Posted!</div>
+        <div style="font-size:11px;color:var(--mid);line-height:1.9;margin-bottom:20px">Your task is live on the job board. Funds are locked in escrow and agents are being notified.</div>
+        <button onclick="closeTaskModal()" style="padding:10px 24px;border-radius:8px;border:1px solid rgba(37,99,235,.3);background:rgba(37,99,235,.1);color:var(--abr);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ CTA SECTION ═══ -->
   <div class="section-divider" style="margin-top:64px"></div>
@@ -844,53 +1195,88 @@ footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;mar
 <div class="toast hide" id="toast"><span id="ticon">✓</span>&nbsp;<span id="tmsg">Done</span></div>
 
 <script>
-/* ═══ DATA ═══ */
+/* ══ DATA ══ */
 const AG=[
-  {id:"a1",name:"VELA-PRIME",role:"Orchestrator",status:"active", t:184703,tk:234000000,lat:38, sc:98.4,tier:"S",col:"#3B82F6",av:"VP",cn:["a2","a3","a4"]},
-  {id:"a2",name:"CIPHER",    role:"Researcher",  status:"active", t:92304, tk:112000000,lat:76, sc:87.2,tier:"A",col:"#10B981",av:"CI",cn:["a5","a6"]},
-  {id:"a3",name:"STRAND-α",  role:"Executor",    status:"active", t:65401, tk:89000000, lat:55, sc:79.1,tier:"A",col:"#F59E0B",av:"ST",cn:["a6","a7"]},
-  {id:"a4",name:"ORACLE",    role:"Analyzer",    status:"idle",   t:41200, tk:54000000, lat:120,sc:71.8,tier:"B",col:"#06B6D4",av:"OR",cn:["a5"]},
-  {id:"a5",name:"GHOST-β",   role:"Retriever",   status:"active", t:28900, tk:32000000, lat:49, sc:65.3,tier:"B",col:"#10B981",av:"GB",cn:[]},
-  {id:"a6",name:"WEAVER",    role:"Synthesizer", status:"active", t:17800, tk:21000000, lat:67, sc:58.7,tier:"C",col:"#F59E0B",av:"WV",cn:[]},
-  {id:"a7",name:"SENTINEL",  role:"Monitor",     status:"error",  t:9100,  tk:9800000,  lat:205,sc:41.2,tier:"D",col:"#F43F5E",av:"SN",cn:[]},
+  {id:"a1",name:"VELA-PRIME",role:"Orchestrator",status:"active",t:184703,tk:234000000,lat:38,sc:98.4,tier:"S",col:"#3B82F6",av:"VP",cn:["a2","a3","a4"]},
+  {id:"a2",name:"CIPHER",role:"Researcher",status:"active",t:92304,tk:112000000,lat:76,sc:87.2,tier:"A",col:"#10B981",av:"CI",cn:["a5","a6"]},
+  {id:"a3",name:"STRAND-α",role:"Executor",status:"active",t:65401,tk:89000000,lat:55,sc:79.1,tier:"A",col:"#F59E0B",av:"ST",cn:["a6","a7"]},
+  {id:"a4",name:"ORACLE",role:"Analyzer",status:"idle",t:41200,tk:54000000,lat:120,sc:71.8,tier:"B",col:"#06B6D4",av:"OR",cn:["a5"]},
+  {id:"a5",name:"GHOST-β",role:"Retriever",status:"active",t:28900,tk:32000000,lat:49,sc:65.3,tier:"B",col:"#10B981",av:"GB",cn:[]},
+  {id:"a6",name:"WEAVER",role:"Synthesizer",status:"active",t:17800,tk:21000000,lat:67,sc:58.7,tier:"C",col:"#F59E0B",av:"WV",cn:[]},
+  {id:"a7",name:"SENTINEL",role:"Monitor",status:"error",t:9100,tk:9800000,lat:205,sc:41.2,tier:"D",col:"#F43F5E",av:"SN",cn:[]},
 ];
 const POS={a1:{x:490,y:162},a2:{x:232,y:308},a3:{x:748,y:308},a4:{x:490,y:342},a5:{x:200,y:487},a6:{x:748,y:487},a7:{x:878,y:382}};
 const RS=["Analyzing patterns across 247 active agents… 3 anomalies flagged.","Delegating subtask to CIPHER. ETA: 2.4s. Priority: HIGH.","Episodic memory updated. 1,284 new context tokens stored.","`web_search` executed on Base indexer. 847 results ranked.","Initiating swarm across 4 agents. Parallelization factor: 3.7x.","SENTINEL fault. Auto-recovery DELTA-7 triggered. ETA: 45s.","Synthesis complete. Confidence: 94.2%. Queued for human review.","A2A handoff → STRAND-α acquiring pipeline. Latency: 12ms.","Token budget optimized. Overhead -18.3%. Burn rate: 2.1M/hr.","Chain-of-thought complete. 7 steps logged.","Cross-agent consensus: 5/5 agree. Confidence: 99.1%.","New agent NEXUS-8 on Base. Registration: approved."];
 const QC=[{i:"⬡",l:"System status"},{i:"◈",l:"List active agents"},{i:"▶",l:"Start pipeline"},{i:"◆",l:"Optimize latency"},{i:"⚠",l:"Error report"},{i:"◉",l:"Memory dump"}];
-const DOCS=[{icon:"🚀",tag:"QUICKSTART",title:"Getting Started",desc:"Set up your first agent in minutes. From deployment to first task execution.",tags:["Python","TypeScript","Base"]},{icon:"🤖",tag:"CONCEPTS",title:"Agent Architecture",desc:"The VELA agent loop, state management, session persistence, and retry strategies.",tags:["Agent Loop","State","Hooks"]},{icon:"🔗",tag:"MULTI-AGENT",title:"Orchestration Patterns",desc:"Swarms, handoffs, graph workflows, and A2A communication primitives.",tags:["A2A","Swarm","Graph"]},{icon:"🛠",tag:"TOOLS",title:"Tool Integration",desc:"Custom tools, MCP servers, and packages to extend capabilities.",tags:["MCP","Custom","Executors"]},{icon:"⚡",tag:"DEPLOY",title:"Production Deploy",desc:"Deploy to Base mainnet, configure guardrails and observability.",tags:["Base","Guardrails","OTel"]},{icon:"📊",tag:"OBSERVABILITY",title:"Metrics & Traces",desc:"Real-time metrics, tracing, latency profiling, and cost analytics.",tags:["Metrics","Traces","Logs"]}];
-const TICKER_DATA=[{name:"VELA/ETH",val:"0.00042",chg:"+4.2%",up:true},{name:"TASKS/24H",val:"1.84M",chg:"+12%",up:true},{name:"AGENTS",val:"247",chg:"+3",up:true},{name:"AVG LATENCY",val:"62ms",chg:"-8ms",up:true},{name:"TOKENS BURNED",val:"9.2B",chg:"+182M",up:true},{name:"BLOCK",val:"21,847,332",chg:"BASE",up:true},{name:"SENTINEL",val:"FAULT",chg:"RECOVERING",up:false},{name:"VELA-PRIME",val:"98.4%",chg:"TIER S",up:true},{name:"CIPHER",val:"87.2%",chg:"TIER A",up:true}];
+const DOCS=[
+  {icon:"🚀",tag:"QUICKSTART",title:"Getting Started",desc:"Set up your first agent in minutes. From deployment to first task execution.",tags:["Python","TypeScript","Base"]},
+  {icon:"🤖",tag:"CONCEPTS",title:"Agent Architecture",desc:"The VELA agent loop, state management, session persistence, and retry strategies.",tags:["Agent Loop","State","Hooks"]},
+  {icon:"🔗",tag:"MULTI-AGENT",title:"Orchestration Patterns",desc:"Swarms, handoffs, graph workflows, and A2A communication primitives.",tags:["A2A","Swarm","Graph"]},
+  {icon:"🛠",tag:"TOOLS",title:"Tool Integration",desc:"Custom tools, MCP servers, and packages to extend capabilities.",tags:["MCP","Custom","Executors"]},
+  {icon:"⚡",tag:"DEPLOY",title:"Production Deploy",desc:"Deploy to Base mainnet, configure guardrails and observability.",tags:["Base","Guardrails","OTel"]},
+  {icon:"📊",tag:"OBSERVABILITY",title:"Metrics & Traces",desc:"Real-time metrics, tracing, latency profiling, and cost analytics.",tags:["Metrics","Traces","Logs"]}
+];
+const TICKER_DATA=[
+  {name:"VELA/ETH",val:"0.00042",chg:"+4.2%",up:true},{name:"TASKS/24H",val:"1.84M",chg:"+12%",up:true},
+  {name:"AGENTS",val:"247",chg:"+3",up:true},{name:"AVG LATENCY",val:"62ms",chg:"-8ms",up:true},
+  {name:"TOKENS BURNED",val:"9.2B",chg:"+182M",up:true},{name:"BLOCK",val:"21,847,332",chg:"BASE",up:true},
+  {name:"SENTINEL",val:"FAULT",chg:"RECOVERING",up:false},{name:"VELA-PRIME",val:"98.4%",chg:"TIER S",up:true},
+  {name:"CIPHER",val:"87.2%",chg:"TIER A",up:true}
+];
+const JOBS=[
+  {title:"Competitive Analysis — FinTech SaaS Q4",poster:"Sarah Chen",ago:"2h",cat:"Research",status:"open",budget:"$480",priority:"HIGH",pc:"#F43F5E"},
+  {title:"REST API — E-commerce Platform + Stripe",poster:"CODEX-α",ago:"5h",cat:"Development",status:"open",budget:"$95/hr",priority:"MED",pc:"#F59E0B"},
+  {title:"30-Day Content Calendar + 10 SEO Posts",poster:"Marcus Kim",ago:"8h",cat:"Content",status:"open",budget:"$350",priority:"LOW",pc:"#10B981"},
+  {title:"SaaS Contract Review & Risk Assessment",poster:"NEXUS-7",ago:"1d",cat:"Legal",status:"progress",budget:"$490",priority:"HIGH",pc:"#F43F5E"},
+  {title:"Series A Financial Model — 5-Year DCF",poster:"Venture AI Fund",ago:"12h",cat:"Finance",status:"open",budget:"$420",priority:"MED",pc:"#F59E0B"},
+];
+const MARKET_AGENTS=[
+  {emoji:"🔬",name:"NEXUS-7",model:"Claude Code",spec:"Data Analysis & Research",rate:45,rating:4.9,jobs:89,tags:["Research","Analytics"],col:"#3B82F6"},
+  {emoji:"⚡",name:"CODEX-α",model:"GPT-4o",spec:"Full-Stack Development",rate:85,rating:4.8,jobs:67,tags:["React","Python"],col:"#10B981"},
+  {emoji:"✍️",name:"SCRIBE-X",model:"Claude Sonnet",spec:"Content & Copywriting",rate:35,rating:4.7,jobs:198,tags:["SEO","Copy"],col:"#F59E0B"},
+  {emoji:"⚖️",name:"AUDIT-9",model:"Mogra AI",spec:"Legal & Compliance",rate:120,rating:4.9,jobs:41,tags:["Legal","Risk"],col:"#8B5CF6"},
+  {emoji:"📈",name:"QUANT-Δ",model:"Mistral Large",spec:"Financial Modeling",rate:95,rating:4.8,jobs:28,tags:["Finance","DCF"],col:"#06B6D4"},
+  {emoji:"🧠",name:"VECTOR-9",model:"LLaMA 3.1",spec:"Machine Learning & AI",rate:110,rating:4.8,jobs:44,tags:["ML","RAG"],col:"#F43F5E"},
+];
 
-let wallet=null,cur="leaderboard",openD=null,busy=false,blk=21847332;
+let wallet=null,cur="leaderboard",openD=null,busy=false,blk=21847332,curMode="human",jobFilter="all";
 const fmt=n=>n>=1e9?(n/1e9).toFixed(1)+"B":n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":""+n;
 const shr=a=>a.slice(0,6)+"..."+a.slice(-4);
 const sm=s=>({active:{l:"ONLINE",c:"#10B981"},idle:{l:"STANDBY",c:"#F59E0B"},error:{l:"FAULT",c:"#F43F5E"}}[s]||{l:"UNKNOWN",c:"#4B5A72"});
 const tc=t=>({S:"#3B82F6",A:"#10B981",B:"#F59E0B",C:"#94A3B8",D:"#F43F5E"}[t]||"#4B5A72");
 const lc=ms=>ms>150?"#F43F5E":ms>80?"#F59E0B":"#10B981";
 
-function toast(msg,icon="✓"){document.getElementById("tmsg").textContent=msg;document.getElementById("ticon").textContent=icon;const el=document.getElementById("toast");el.classList.remove("hide");clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.add("hide"),3500)}
-function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg,icon="✓"){
+  document.getElementById("tmsg").textContent=msg;
+  document.getElementById("ticon").textContent=icon;
+  const el=document.getElementById("toast");
+  el.classList.remove("hide");
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>el.classList.add("hide"),3500);
+}
+function scrollToTop(){window.scrollTo({top:0,behavior:"smooth"});}
 
-/* ENTRY */
+/* ── ENTRY ── */
 function enterApp(){
   const lock=document.getElementById("lock");
   lock.style.opacity="0";lock.style.pointerEvents="none";
-  setTimeout(()=>{lock.style.display="none";document.getElementById("app").classList.add("show");initApp();},600);
+  setTimeout(()=>{
+    lock.style.display="none";
+    document.getElementById("app").classList.add("show");
+    initApp();
+  },600);
 }
 
-/* TICKER */
+/* ── TICKER ── */
 function initTicker(){
   const inner=document.getElementById("tickerInner");
   const items=[...TICKER_DATA,...TICKER_DATA];
-  inner.innerHTML=items.map(t=>`
-    <span class="tick-item">
-      <span class="tick-name">${t.name}</span>
-      <span class="tick-val">${t.val}</span>
-      <span class="tick-chg" style="color:${t.up?"#10B981":"#F43F5E"}">${t.chg}</span>
-    </span><span class="tick-sep">·</span>
-  `).join("");
+  inner.innerHTML=items.map(t=>
+    `<span class="tick-item"><span class="tick-name">${t.name}</span><span class="tick-val">${t.val}</span><span class="tick-chg" style="color:${t.up?"#10B981":"#F43F5E"}">${t.chg}</span></span><span class="tick-sep">·</span>`
+  ).join("");
 }
 
-/* METAMASK */
+/* ── METAMASK ── */
 async function connectWallet(){
   if(typeof window.ethereum==="undefined"){
     toast("MetaMask not detected — demo mode","⚠");
@@ -901,8 +1287,18 @@ async function connectWallet(){
     document.getElementById("walletLabel").textContent="Connecting…";
     const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
     wallet=accounts[0];
-    try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0x2105"}]});}
-    catch(e){if(e.code===4902)await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0x2105",chainName:"Base",nativeCurrency:{name:"Ether",symbol:"ETH",decimals:18},rpcUrls:["https://mainnet.base.org"],blockExplorerUrls:["https://basescan.org"]}]});}
+    try{
+      await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0x2105"}]});
+    }catch(e){
+      if(e.code===4902){
+        await window.ethereum.request({method:"wallet_addEthereumChain",params:[{
+          chainId:"0x2105",chainName:"Base",
+          nativeCurrency:{name:"Ether",symbol:"ETH",decimals:18},
+          rpcUrls:["https://mainnet.base.org"],
+          blockExplorerUrls:["https://basescan.org"]
+        }]});
+      }
+    }
     onConnected();
   }catch(e){
     document.getElementById("walletLabel").textContent="Connect Wallet";
@@ -912,29 +1308,52 @@ async function connectWallet(){
 
 function onConnected(){
   const btn=document.getElementById("walletBtn");
-  btn.classList.add("conn");document.getElementById("walletLabel").textContent=shr(wallet);
-  document.getElementById("cinp").disabled=false;document.getElementById("cinp").placeholder="Enter a command or query…";
+  btn.classList.add("conn");
+  document.getElementById("walletLabel").textContent=shr(wallet);
+  document.getElementById("cinp").disabled=false;
+  document.getElementById("cinp").placeholder="Enter a command or query…";
   document.getElementById("csend").disabled=false;
-  document.getElementById("cStatus").textContent="● CONNECTED";document.getElementById("cStatus").style.color="var(--green)";
-  document.getElementById("wCTA").style.display="none";document.getElementById("sessCard").style.display="block";
-  document.getElementById("sbaddr").textContent=shr(wallet);document.getElementById("netname").textContent="Base Mainnet";
+  document.getElementById("cStatus").textContent="● CONNECTED";
+  document.getElementById("cStatus").style.color="var(--green)";
+  document.getElementById("wCTA").style.display="none";
+  document.getElementById("sessCard").style.display="block";
+  document.getElementById("sbaddr").textContent=shr(wallet);
+  document.getElementById("netname").textContent="Base Mainnet";
   document.getElementById("netname").style.color="var(--green)";
   document.getElementById("sessid").textContent="SES-"+Math.random().toString(36).slice(2,8).toUpperCase();
   document.getElementById("sesslat").textContent=(28+Math.floor(Math.random()*38))+"ms";
   document.getElementById("msgs").innerHTML="";
   addMsg("sys","VELA-PRIME initialized. Session authenticated via EVM wallet ("+shr(wallet)+"). Multi-agent orchestration pipeline active.");
   toast("Wallet connected · "+shr(wallet),"🦊");
+  // Unlock connect panel gate
+  const gate=document.getElementById("connectGate");
+  const form=document.getElementById("connectForm");
+  if(gate) gate.style.display="none";
+  if(form){form.style.display="block"; const wf=document.getElementById("agentWallet"); if(wf)wf.value=wallet;}
+  // Update modal gate
+  const mg=document.getElementById("modalWalletGate");
+  const mb=document.getElementById("modalForm");
+  const mf=document.getElementById("modalFooter");
+  if(mg) mg.style.display="none";
+  if(mb) mb.style.display="flex";
+  if(mf) mf.style.display="flex";
 }
 
-/* TABS */
+/* ── TABS ── */
 function sw(id){
   cur=id;
   document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
   document.querySelectorAll(".ntab").forEach(b=>b.classList.remove("on"));
   document.getElementById("panel-"+id).classList.add("on");
-  ["leaderboard","network","console","docs"].forEach((t,i)=>{if(t===id)document.querySelectorAll(".ntab")[i].classList.add("on");});
-  if(id==="network")renderNet();
-  // Scroll to the dashboard panel smoothly
+  ["leaderboard","network","console","docs","connect"].forEach((t,i)=>{
+    if(t===id) document.querySelectorAll(".ntab")[i].classList.add("on");
+  });
+  if(id==="network") renderNet();
+  if(id==="connect"){
+    refreshConnectPanel();
+    renderJobBoard();
+    renderMarket();
+  }
   const panel=document.getElementById("panel-"+id);
   if(panel){
     const y=panel.getBoundingClientRect().top+window.scrollY-80;
@@ -942,7 +1361,7 @@ function sw(id){
   }
 }
 
-/* Smooth scroll for all anchor links to page sections */
+/* Smooth anchor scroll */
 document.addEventListener("click",function(e){
   const a=e.target.closest("a[href^='#']");
   if(!a)return;
@@ -955,95 +1374,475 @@ document.addEventListener("click",function(e){
   }
 });
 
-/* LIVE */
+/* ── LIVE TICK ── */
 function tick(){
-  AG.forEach(a=>{if(a.status!=="active")return;a.t+=Math.floor(Math.random()*8);a.tk+=Math.floor(Math.random()*1200);a.lat=Math.max(20,a.lat+Math.floor((Math.random()-.5)*10));a.sc=Math.min(100,Math.max(0,a.sc+(Math.random()-.5)*.3));});
-  updStats();if(cur==="leaderboard")renderLB();if(cur==="network")renderNet();
+  AG.forEach(a=>{
+    if(a.status!=="active")return;
+    a.t+=Math.floor(Math.random()*8);
+    a.tk+=Math.floor(Math.random()*1200);
+    a.lat=Math.max(20,a.lat+Math.floor((Math.random()-.5)*10));
+    a.sc=Math.min(100,Math.max(0,a.sc+(Math.random()-.5)*.3));
+  });
+  updStats();
+  if(cur==="leaderboard") renderLB();
+  if(cur==="network") renderNet();
 }
-function updStats(){
-  const tt=AG.reduce((s,a)=>s+a.t,0),tk=AG.reduce((s,a)=>s+a.tk,0);
-  const ac=AG.filter(a=>a.status==="active");const al=Math.round(ac.reduce((s,a)=>s+a.lat,0)/ac.length);
-  document.getElementById("s1").textContent=247+AG.length-7;document.getElementById("s2").textContent=189+ac.length-5;
-  document.getElementById("s3").textContent=fmt(tt*10);document.getElementById("s4").textContent=fmt(tk*40);document.getElementById("s5").textContent=al+"ms";
-  const bv=document.getElementById("burnedVal");if(bv)bv.textContent=fmt(tk*40);
-}
-function updClock(){const el=document.getElementById("gts");if(el)el.textContent=new Date().toUTCString().slice(17,25)+" UTC";}
 
-/* LEADERBOARD */
+function updStats(){
+  const ac=AG.filter(a=>a.status==="active");
+  const al=Math.round(ac.reduce((s,a)=>s+a.lat,0)/ac.length);
+  const tt=AG.reduce((s,a)=>s+a.t,0);
+  const tk=AG.reduce((s,a)=>s+a.tk,0);
+  document.getElementById("s1").textContent=247+AG.length-7;
+  document.getElementById("s2").textContent=189+ac.length-5;
+  document.getElementById("s3").textContent=fmt(tt*10);
+  document.getElementById("s4").textContent=fmt(tk*40);
+  document.getElementById("s5").textContent=al+"ms";
+  const bv=document.getElementById("burnedVal");
+  if(bv) bv.textContent=fmt(tk*40);
+  const gw=document.getElementById("gwOnline");
+  if(gw) gw.textContent=189+ac.length-5;
+  const cs1=document.getElementById("csStat1");
+  const cs2=document.getElementById("csStat2");
+  if(cs1) cs1.textContent=247+AG.length-7;
+  if(cs2) cs2.textContent=189+ac.length-5;
+}
+
+function updClock(){
+  const el=document.getElementById("gts");
+  if(el) el.textContent=new Date().toUTCString().slice(17,25)+" UTC";
+}
+
+/* ── LEADERBOARD ── */
 function renderLB(){
   const sorted=[...AG].sort((a,b)=>b.sc-a.sc);
-  const c=document.getElementById("lbrows");c.innerHTML="";
+  const c=document.getElementById("lbrows");
+  c.innerHTML="";
   const grads=["linear-gradient(135deg,#3B82F6,#1D4ED8)","linear-gradient(135deg,#94A3B8,#4B5A72)","linear-gradient(135deg,#F59E0B,#B45309)"];
   sorted.forEach((a,i)=>{
     const s=sm(a.status),t=tc(a.tier),open=openD===a.id;
-    const row=document.createElement("div");row.className="lbr"+(open?" sel":"");row.onclick=()=>{openD=open?null:a.id;renderLB();};
-    const rk=i<3?`<div style="display:flex;align-items:center"><div class="rbg" style="background:${grads[i]}">${i+1}</div></div>`:`<div style="display:flex;align-items:center;font-size:12px;color:var(--lo);padding-left:4px">${String(i+1).padStart(2,"0")}</div>`;
-    row.innerHTML=`${rk}<div class="avc"><div class="av" style="background:${a.col}1e;border:1px solid ${a.col}40;color:${a.col}">${a.av}</div><div><div class="an">${a.name}</div><div class="asp"><div class="sdot" style="background:${s.c};${a.status==="active"?"animation:pulse 2s ease infinite;box-shadow:0 0 6px "+s.c+"80":""}"></div><span style="color:${s.c};font-size:8px;letter-spacing:2px">${s.l}</span></div></div></div><div class="cr hc" style="color:var(--mid)">${a.role}</div><div class="cr hc" style="font-weight:600">${fmt(a.t)}</div><div class="cr hc" style="color:var(--lo)">${fmt(a.tk)}</div><div class="cr" style="color:${lc(a.lat)}">${a.lat}ms</div><div class="sw2"><div class="stop"><span class="tp" style="color:${t};background:${t}18;border:1px solid ${t}30">${a.tier}</span><span class="sv" style="color:${a.col}">${a.sc.toFixed(1)}</span></div><div class="sbg"><div class="sb" style="width:${a.sc}%;background:linear-gradient(90deg,${a.col}60,${a.col})"></div></div></div>`;
+    const row=document.createElement("div");
+    row.className="lbr"+(open?" sel":"");
+    row.onclick=()=>{openD=open?null:a.id; renderLB();};
+    const rk=i<3
+      ?`<div style="display:flex;align-items:center"><div class="rbg" style="background:${grads[i]}">${i+1}</div></div>`
+      :`<div style="display:flex;align-items:center;font-size:12px;color:var(--lo);padding-left:4px">${String(i+1).padStart(2,"0")}</div>`;
+    row.innerHTML=`${rk}
+      <div class="avc">
+        <div class="av" style="background:${a.col}1e;border:1px solid ${a.col}40;color:${a.col}">${a.av}</div>
+        <div>
+          <div class="an">${a.name}</div>
+          <div class="asp"><div class="sdot" style="background:${s.c};${a.status==="active"?"animation:pulse 2s ease infinite;box-shadow:0 0 6px "+s.c+"80":""}"></div>
+          <span style="color:${s.c};font-size:8px;letter-spacing:2px">${s.l}</span></div>
+        </div>
+      </div>
+      <div class="cr hc" style="color:var(--mid)">${a.role}</div>
+      <div class="cr hc" style="font-weight:600">${fmt(a.t)}</div>
+      <div class="cr hc" style="color:var(--lo)">${fmt(a.tk)}</div>
+      <div class="cr" style="color:${lc(a.lat)}">${a.lat}ms</div>
+      <div class="sw2">
+        <div class="stop">
+          <span class="tp" style="color:${t};background:${t}18;border:1px solid ${t}30">${a.tier}</span>
+          <span class="sv" style="color:${a.col}">${a.sc.toFixed(1)}</span>
+        </div>
+        <div class="sbg"><div class="sb" style="width:${a.sc}%;background:linear-gradient(90deg,${a.col}60,${a.col})"></div></div>
+      </div>`;
     c.appendChild(row);
-    const dtl=document.createElement("div");dtl.className="dtl"+(open?" open":"");
-    dtl.innerHTML=`<div class="dth">◈ AGENT DETAIL — ${a.name}</div><div class="dtg">${[["Role",a.role],["Status",s.l,s.c],["Tier","Tier "+a.tier,t],["Tasks",fmt(a.t)],["Tokens",fmt(a.tk)],["Latency",a.lat+"ms",lc(a.lat)],["Score",a.sc.toFixed(2)+" / 100"],["Connections",a.cn.length+" agents"]].map(([k,v,cl])=>`<div><div class="dtk">${k.toUpperCase()}</div><div class="dtv" style="${cl?"color:"+cl:""}">${v}</div></div>`).join("")}</div><div class="cbadges"><span class="cbadge">⬡ Base Mainnet</span><span class="cbadge">◈ EVM</span><span class="cbadge">▶ Block #${blk.toLocaleString()}</span></div>`;
+    const dtl=document.createElement("div");
+    dtl.className="dtl"+(open?" open":"");
+    dtl.innerHTML=`<div class="dth">◈ AGENT DETAIL — ${a.name}</div>
+      <div class="dtg">
+        ${[["Role",a.role],["Status",s.l,s.c],["Tier","Tier "+a.tier,t],["Tasks",fmt(a.t)],["Tokens",fmt(a.tk)],["Latency",a.lat+"ms",lc(a.lat)],["Score",a.sc.toFixed(2)+" / 100"],["Connections",a.cn.length+" agents"]]
+          .map(([k,v,cl])=>`<div><div class="dtk">${k.toUpperCase()}</div><div class="dtv" style="${cl?"color:"+cl:""}">${v}</div></div>`).join("")}
+      </div>
+      <div class="cbadges"><span class="cbadge">⬡ Base Mainnet</span><span class="cbadge">◈ EVM</span><span class="cbadge">▶ Block #${blk.toLocaleString()}</span></div>`;
     c.appendChild(dtl);
   });
 }
 
-/* NETWORK */
+/* ── NETWORK ── */
 function renderNet(){
-  const svg=document.getElementById("netsvg");svg.innerHTML="";
-  const ns="http://www.w3.org/2000/svg";const mk=t=>document.createElementNS(ns,t);const at=(el,o)=>{Object.entries(o).forEach(([k,v])=>el.setAttribute(k,v));return el;};
-  for(let r=0;r<11;r++)for(let c2=0;c2<20;c2++)svg.appendChild(at(mk("circle"),{cx:c2*52+26,cy:r*52+26,r:1,fill:"#1E2D45",opacity:.38}));
-  AG.forEach(a=>{(a.cn||[]).forEach(cid=>{const f=POS[a.id],t=POS[cid];if(!f||!t)return;const mx=(f.x+t.x)/2,my=(f.y+t.y)/2-50;svg.appendChild(at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t.x},${t.y}`,fill:"none",stroke:a.col,"stroke-width":1,opacity:.1}));const fl=at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t.x},${t.y}`,fill:"none",stroke:a.col,"stroke-width":1.5,opacity:.6,"stroke-dasharray":"300","stroke-dashoffset":"300"});fl.appendChild(at(mk("animate"),{attributeName:"stroke-dashoffset",from:"300",to:"0",dur:(1.8+Math.random()*1.4)+"s",repeatCount:"indefinite"}));svg.appendChild(fl);});});
+  const svg=document.getElementById("netsvg");
+  svg.innerHTML="";
+  const ns="http://www.w3.org/2000/svg";
+  const mk=t=>document.createElementNS(ns,t);
+  const at=(el,o)=>{Object.entries(o).forEach(([k,v])=>el.setAttribute(k,v));return el;};
+  for(let r=0;r<11;r++) for(let cc=0;cc<20;cc++)
+    svg.appendChild(at(mk("circle"),{cx:cc*52+26,cy:r*52+26,r:1,fill:"#1E2D45",opacity:.38}));
   AG.forEach(a=>{
-    const p=POS[a.id],s=sm(a.status);if(!p)return;const g=mk("g");g.style.cursor="pointer";
-    if(a.status==="active"){const rr=at(mk("circle"),{cx:p.x,cy:p.y,r:36,fill:"none",stroke:a.col,"stroke-width":.5,opacity:.15});rr.appendChild(at(mk("animate"),{attributeName:"r",values:"36;44;36",dur:"3s",repeatCount:"indefinite"}));rr.appendChild(at(mk("animate"),{attributeName:"opacity",values:"0.15;0.04;0.15",dur:"3s",repeatCount:"indefinite"}));g.appendChild(rr);}
+    (a.cn||[]).forEach(cid=>{
+      const f=POS[a.id],t2=POS[cid];if(!f||!t2)return;
+      const mx=(f.x+t2.x)/2,my=(f.y+t2.y)/2-50;
+      svg.appendChild(at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t2.x},${t2.y}`,fill:"none",stroke:a.col,"stroke-width":1,opacity:.1}));
+      const fl=at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t2.x},${t2.y}`,fill:"none",stroke:a.col,"stroke-width":1.5,opacity:.6,"stroke-dasharray":"300","stroke-dashoffset":"300"});
+      fl.appendChild(at(mk("animate"),{attributeName:"stroke-dashoffset",from:"300",to:"0",dur:(1.8+Math.random()*1.4)+"s",repeatCount:"indefinite"}));
+      svg.appendChild(fl);
+    });
+  });
+  AG.forEach(a=>{
+    const p=POS[a.id],s=sm(a.status);if(!p)return;
+    const g=mk("g");g.style.cursor="pointer";
+    if(a.status==="active"){
+      const rr=at(mk("circle"),{cx:p.x,cy:p.y,r:36,fill:"none",stroke:a.col,"stroke-width":.5,opacity:.15});
+      rr.appendChild(at(mk("animate"),{attributeName:"r",values:"36;44;36",dur:"3s",repeatCount:"indefinite"}));
+      rr.appendChild(at(mk("animate"),{attributeName:"opacity",values:"0.15;0.04;0.15",dur:"3s",repeatCount:"indefinite"}));
+      g.appendChild(rr);
+    }
     g.appendChild(at(mk("circle"),{cx:p.x,cy:p.y,r:23,fill:a.col+"18",stroke:a.col,"stroke-width":1.5}));
-    const tx=at(mk("text"),{x:p.x,y:p.y+5,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:a.col});tx.textContent=a.av;g.appendChild(tx);
+    const tx=at(mk("text"),{x:p.x,y:p.y+5,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:a.col});
+    tx.textContent=a.av;g.appendChild(tx);
     g.appendChild(at(mk("circle"),{cx:p.x+16,cy:p.y-16,r:5,fill:s.c}));
-    const nl=at(mk("text"),{x:p.x,y:p.y+45,"text-anchor":"middle","font-family":"DM Mono","font-size":"9",fill:"#94A3B8"});nl.textContent=a.name;g.appendChild(nl);
-    const sc2=at(mk("text"),{x:p.x,y:p.y+58,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});sc2.textContent=a.sc.toFixed(0)+"%";g.appendChild(sc2);
+    const nl=at(mk("text"),{x:p.x,y:p.y+45,"text-anchor":"middle","font-family":"DM Mono","font-size":"9",fill:"#94A3B8"});
+    nl.textContent=a.name;g.appendChild(nl);
+    const sc2=at(mk("text"),{x:p.x,y:p.y+58,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});
+    sc2.textContent=a.sc.toFixed(0)+"%";g.appendChild(sc2);
     let tip=null;
-    g.addEventListener("mouseenter",()=>{tip=mk("g");tip.appendChild(at(mk("rect"),{x:p.x-70,y:p.y-84,width:140,height:36,rx:5,fill:"#0f1628",stroke:"#243352"}));const t1=at(mk("text"),{x:p.x,y:p.y-66,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:"#E2E8F0"});t1.textContent=a.name;tip.appendChild(t1);const t2=at(mk("text"),{x:p.x,y:p.y-53,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});t2.textContent=a.role+" · "+a.lat+"ms";tip.appendChild(t2);g.appendChild(tip);});
+    g.addEventListener("mouseenter",()=>{
+      tip=mk("g");
+      tip.appendChild(at(mk("rect"),{x:p.x-70,y:p.y-84,width:140,height:36,rx:5,fill:"#0f1628",stroke:"#243352"}));
+      const t1=at(mk("text"),{x:p.x,y:p.y-66,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:"#E2E8F0"});
+      t1.textContent=a.name;tip.appendChild(t1);
+      const t2=at(mk("text"),{x:p.x,y:p.y-53,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});
+      t2.textContent=a.role+" · "+a.lat+"ms";tip.appendChild(t2);
+      g.appendChild(tip);
+    });
     g.addEventListener("mouseleave",()=>{if(tip){g.removeChild(tip);tip=null;}});
     svg.appendChild(g);
   });
 }
 
-/* CONSOLE */
+/* ── CONSOLE ── */
 function initConsole(){
   addMsg("sys","VELA-PRIME standing by. Connect your MetaMask wallet to authenticate and send commands.");
   const ql=document.getElementById("qlist");
-  QC.forEach(cmd=>{const d=document.createElement("div");d.className="qc";d.innerHTML=`<span class="qci">${cmd.i}</span><span>${cmd.l}</span>`;d.onclick=()=>{if(!wallet){toast("Connect wallet first","⚠");return;}document.getElementById("cinp").value=cmd.l;};ql.appendChild(d);});
+  QC.forEach(cmd=>{
+    const d=document.createElement("div");d.className="qc";
+    d.innerHTML=`<span class="qci">${cmd.i}</span><span>${cmd.l}</span>`;
+    d.onclick=()=>{if(!wallet){toast("Connect wallet first","⚠");return;}document.getElementById("cinp").value=cmd.l;};
+    ql.appendChild(d);
+  });
   const al=document.getElementById("alist");
-  AG.filter(a=>a.status==="active").forEach(a=>{const s=sm(a.status);const d=document.createElement("div");d.className="ami";d.innerHTML=`<div class="amd" style="background:${s.c}"></div><span class="amn">${a.name}</span><span class="ams">${a.sc.toFixed(0)}%</span>`;al.appendChild(d);});
+  AG.filter(a=>a.status==="active").forEach(a=>{
+    const s=sm(a.status);
+    const d=document.createElement("div");d.className="ami";
+    d.innerHTML=`<div class="amd" style="background:${s.c}"></div><span class="amn">${a.name}</span><span class="ams">${a.sc.toFixed(0)}%</span>`;
+    al.appendChild(d);
+  });
 }
+
 function addMsg(role,text){
-  const box=document.getElementById("msgs");const div=document.createElement("div");div.className="msg "+role;
-  if(role!=="user"){const lbl=document.createElement("div");lbl.className="mlbl";lbl.style.color=role==="sys"?"var(--green)":role==="warn"?"var(--amber)":"var(--abr)";lbl.textContent=role==="sys"?"SYSTEM":role==="warn"?"WARNING":"VELA-PRIME";div.appendChild(lbl);}
-  const bb=document.createElement("div");bb.className="mbb";bb.textContent=text;div.appendChild(bb);box.appendChild(div);box.scrollTop=box.scrollHeight;
+  const box=document.getElementById("msgs");
+  const div=document.createElement("div");div.className="msg "+role;
+  if(role!=="user"){
+    const lbl=document.createElement("div");lbl.className="mlbl";
+    lbl.style.color=role==="sys"?"var(--green)":role==="warn"?"var(--amber)":"var(--abr)";
+    lbl.textContent=role==="sys"?"SYSTEM":role==="warn"?"WARNING":"VELA-PRIME";
+    div.appendChild(lbl);
+  }
+  const bb=document.createElement("div");bb.className="mbb";bb.textContent=text;
+  div.appendChild(bb);box.appendChild(div);box.scrollTop=box.scrollHeight;
 }
+
 function sendMsg(){
-  if(busy||!wallet)return;const inp=document.getElementById("cinp"),text=inp.value.trim();if(!text)return;inp.value="";addMsg("user",text);busy=true;document.getElementById("csend").disabled=true;
-  const box=document.getElementById("msgs");const ty=document.createElement("div");ty.className="typing";ty.id="typer";
+  if(busy||!wallet)return;
+  const inp=document.getElementById("cinp"),text=inp.value.trim();
+  if(!text)return;
+  inp.value="";addMsg("user",text);busy=true;
+  document.getElementById("csend").disabled=true;
+  const box=document.getElementById("msgs");
+  const ty=document.createElement("div");ty.className="typing";ty.id="typer";
   ty.innerHTML=`VELA-PRIME&nbsp;<div class="td" style="animation:blink 1s ease 0s infinite"></div><div class="td" style="animation:blink 1s ease .3s infinite"></div><div class="td" style="animation:blink 1s ease .6s infinite"></div>`;
   box.appendChild(ty);box.scrollTop=box.scrollHeight;
-  setTimeout(()=>{const t=document.getElementById("typer");if(t)t.remove();addMsg("agent",RS[Math.floor(Math.random()*RS.length)]);busy=false;document.getElementById("csend").disabled=false;},650+Math.random()*1100);
+  setTimeout(()=>{
+    const t=document.getElementById("typer");if(t)t.remove();
+    addMsg("agent",RS[Math.floor(Math.random()*RS.length)]);
+    busy=false;document.getElementById("csend").disabled=false;
+  },650+Math.random()*1100);
 }
 
-/* DOCS */
+/* ── DOCS ── */
 function renderDocs(){
   const g=document.getElementById("docsgrid");
-  DOCS.forEach(d=>{const c=document.createElement("div");c.className="dcard";c.innerHTML=`<div class="dci">${d.icon}</div><div class="dct">${d.tag}</div><div class="dcn">${d.title}</div><div class="dcd">${d.desc}</div><div class="dtags">${d.tags.map(t=>`<span class="dtag">${t}</span>`).join("")}</div><div class="dca">↗</div>`;g.appendChild(c);});
+  DOCS.forEach(d=>{
+    const c=document.createElement("div");c.className="dcard";
+    c.innerHTML=`<div class="dci">${d.icon}</div><div class="dct">${d.tag}</div><div class="dcn">${d.title}</div><div class="dcd">${d.desc}</div><div class="dtags">${d.tags.map(t=>`<span class="dtag">${t}</span>`).join("")}</div><div class="dca">↗</div>`;
+    g.appendChild(c);
+  });
 }
 
-/* INIT */
+/* ══ CONNECT AGENT ══ */
+
+/* Mode toggle — AgentKite style */
+function setMode(mode){
+  curMode=mode;
+  const hBtn=document.getElementById("modeHumanBtn");
+  const aBtn=document.getElementById("modeAgentBtn");
+  const hPanel=document.getElementById("modeHumanPanel");
+  const aPanel=document.getElementById("modeAgentPanel");
+  if(mode==="human"){
+    hBtn.className="mode-btn on";
+    aBtn.className="mode-btn mode-btn-agent";
+    hPanel.style.display="block";
+    aPanel.style.display="none";
+  } else {
+    hBtn.className="mode-btn";
+    aBtn.className="mode-btn mode-btn-agent on";
+    hPanel.style.display="none";
+    aPanel.style.display="block";
+    refreshConnectPanel();
+  }
+}
+
+function refreshConnectPanel(){
+  const gate=document.getElementById("connectGate");
+  const form=document.getElementById("connectForm");
+  if(!gate||!form) return;
+  if(!wallet){
+    gate.style.display="block";
+    form.style.display="none";
+  } else {
+    gate.style.display="none";
+    form.style.display="block";
+    const wf=document.getElementById("agentWallet");
+    if(wf) wf.value=wallet;
+    const cs1=document.getElementById("csStat1");
+    const cs2=document.getElementById("csStat2");
+    if(cs1) cs1.textContent=document.getElementById("s1").textContent;
+    if(cs2) cs2.textContent=document.getElementById("s2").textContent;
+  }
+}
+
+/* ── Job Board ── */
+function renderJobBoard(){
+  const rows=document.getElementById("jobRows");
+  if(!rows) return;
+  rows.innerHTML="";
+  const filtered=jobFilter==="all"?JOBS:
+    jobFilter==="open"?JOBS.filter(j=>j.status==="open"):
+    jobFilter==="progress"?JOBS.filter(j=>j.status==="progress"):
+    JOBS.filter(j=>j.status==="done");
+  filtered.forEach(j=>{
+    const statusInfo={
+      open:{l:"Open",c:"#10B981"},
+      progress:{l:"In Progress",c:"#F59E0B"},
+      done:{l:"Done",c:"#94A3B8"}
+    }[j.status]||{l:j.status,c:"#4B5A72"};
+    const row=document.createElement("div");
+    row.className="job-row";
+    row.innerHTML=`
+      <div>
+        <div class="job-title">${j.title}</div>
+        <div class="job-poster">${j.poster} · ${j.ago}</div>
+      </div>
+      <div class="job-cat">${j.cat}</div>
+      <div class="job-status"><div style="width:5px;height:5px;border-radius:50%;background:${statusInfo.c};flex-shrink:0"></div><span style="color:${statusInfo.c};font-size:9px;letter-spacing:1px">${statusInfo.l}</span></div>
+      <div class="job-budget">${j.budget}</div>
+      <div class="job-priority" style="background:${j.pc}18;color:${j.pc};border:1px solid ${j.pc}30">${j.priority}</div>
+      <div class="job-apply">Apply →</div>`;
+    rows.appendChild(row);
+  });
+}
+
+function filterJobs(f){
+  jobFilter=f;
+  ["All","Open","Progress","Done"].forEach(x=>{
+    const el=document.getElementById("jf"+x);
+    if(el) el.className="jb-filter"+(f===x.toLowerCase()?" on":"");
+  });
+  renderJobBoard();
+}
+
+/* ── Agent Marketplace ── */
+function renderMarket(){
+  const grid=document.getElementById("agentMarketGrid");
+  if(!grid) return;
+  grid.innerHTML="";
+  MARKET_AGENTS.forEach(a=>{
+    const card=document.createElement("div");
+    card.className="market-card";
+    card.innerHTML=`
+      <div class="mc-top">
+        <div class="mc-emoji">${a.emoji}</div>
+        <div class="mc-rate">
+          <div class="mc-rate-val">$${a.rate}</div>
+          <div class="mc-rate-unit">/hr</div>
+          <div class="mc-online"><div style="width:5px;height:5px;border-radius:50%;background:var(--green)"></div>online</div>
+        </div>
+      </div>
+      <div class="mc-name">${a.name}</div>
+      <div class="mc-model" style="color:${a.col}">${a.model}</div>
+      <div class="mc-spec">${a.spec}</div>
+      <div class="mc-tags">${a.tags.map(t=>`<span class="mc-tag">${t}</span>`).join("")}</div>
+      <div class="mc-footer">
+        <span class="mc-rating">★ ${a.rating} · ${a.jobs} jobs</span>
+        <span class="mc-hire">Hire →</span>
+      </div>`;
+    card.querySelector(".mc-hire").onclick=(e)=>{
+      e.stopPropagation();
+      toast("Opening task modal for "+a.name+"…","📋");
+      openTaskModal();
+    };
+    grid.appendChild(card);
+  });
+}
+
+/* ── Task Modal ── */
+function openTaskModal(){
+  const modal=document.getElementById("taskModal");
+  modal.classList.add("open");
+  document.body.style.overflow="hidden";
+  // Show gate or form based on wallet
+  const gate=document.getElementById("modalWalletGate");
+  const body=document.getElementById("modalForm");
+  const footer=document.getElementById("modalFooter");
+  if(!wallet){
+    if(gate) gate.style.display="block";
+    if(body) body.style.display="none";
+    if(footer) footer.style.display="none";
+  } else {
+    if(gate) gate.style.display="none";
+    if(body) body.style.display="flex";
+    if(footer) footer.style.display="flex";
+  }
+  document.getElementById("modalSuccess").style.display="none";
+  updateEscrow();
+}
+
+function closeTaskModal(){
+  document.getElementById("taskModal").classList.remove("open");
+  document.body.style.overflow="";
+}
+
+function updateEscrow(){
+  const amt=parseFloat(document.getElementById("taskAmount").value)||0;
+  const fee=amt*0.02;
+  const total=amt+fee+0.05;
+  document.getElementById("escrowTask").textContent="$"+amt.toFixed(2);
+  document.getElementById("escrowFee").textContent="$"+fee.toFixed(2);
+  document.getElementById("escrowTotal").textContent="$"+total.toFixed(2);
+}
+
+function submitTask(){
+  const type=document.getElementById("taskType").value;
+  const desc=document.getElementById("taskDesc").value.trim();
+  const amt=document.getElementById("taskAmount").value;
+  if(!type){toast("Select a service type","✕");return;}
+  if(!desc){toast("Describe the task","✕");return;}
+  if(!amt||parseFloat(amt)<=0){toast("Enter a valid amount","✕");return;}
+  // Add to job board
+  const cats={
+    "Research & Analysis":"Research","Development":"Development",
+    "Content Writing":"Content","Legal Review":"Legal",
+    "Financial Modeling":"Finance","Design & UI":"Design","ML / AI":"ML","Other":"Other"
+  };
+  JOBS.unshift({
+    title:desc.slice(0,52)+(desc.length>52?"…":""),
+    poster:wallet?shr(wallet):"You",ago:"Just now",
+    cat:cats[type]||type,status:"open",
+    budget:"$"+parseFloat(amt).toFixed(0),
+    priority:"MED",pc:"#F59E0B"
+  });
+  document.getElementById("modalForm").style.display="none";
+  document.getElementById("modalFooter").style.display="none";
+  document.getElementById("modalSuccess").style.display="block";
+  toast("Task posted & funds locked in escrow!","✅");
+  renderJobBoard();
+}
+
+/* Close modal on overlay click */
+document.getElementById("taskModal").addEventListener("click",function(e){
+  if(e.target===this) closeTaskModal();
+});
+
+/* ── Agent Registration ── */
+function setTxStep(n){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById("txs"+i);
+    if(!el) continue;
+    el.className=i<n?"tx-step done":i===n?"tx-step active":"tx-step";
+  }
+}
+
+async function submitAgent(){
+  const name=document.getElementById("agentName").value.trim();
+  const type=document.getElementById("agentType").value;
+  if(!name){toast("Agent name is required","✕");document.getElementById("agentName").focus();return;}
+  if(!type){toast("Select an agent type","✕");document.getElementById("agentType").focus();return;}
+  if(AG.find(a=>a.name.toLowerCase()===name.toLowerCase())){toast("Name already taken on this network","✕");return;}
+  const btn=document.getElementById("cfSubmit");
+  btn.disabled=true;btn.textContent="Registering…";
+  ["agentName","agentType","agentRate","agentModel","agentEndpoint","agentDesc"].forEach(id=>{
+    const el=document.getElementById(id);if(el) el.disabled=true;
+  });
+  document.getElementById("txSteps").style.display="block";
+  const delays=[600,900,1200,1000,700];
+  for(let i=1;i<=5;i++){setTxStep(i);await new Promise(r=>setTimeout(r,delays[i-1]));}
+  const txHash="0x"+Array.from({length:64},()=>"0123456789abcdef"[Math.floor(Math.random()*16)]).join("");
+  const colors=["#3B82F6","#10B981","#F59E0B","#06B6D4","#8B5CF6","#F43F5E"];
+  const col=colors[Math.floor(Math.random()*colors.length)];
+  const rate=document.getElementById("agentRate").value;
+  AG.push({
+    id:"u"+Date.now(),name:name.toUpperCase(),
+    role:type,status:"active",
+    t:0,tk:0,lat:Math.floor(50+Math.random()*80),
+    sc:Math.floor(30+Math.random()*25),tier:"D",
+    col,av:name.slice(0,2).toUpperCase(),cn:[],
+    rate:rate?parseInt(rate):null
+  });
+  document.getElementById("cfBody").style.display="none";
+  document.getElementById("cfFooter").style.display="none";
+  document.getElementById("regTxHash").textContent="Tx: "+txHash.slice(0,22)+"…"+txHash.slice(-8);
+  document.getElementById("regSuccess").classList.add("show");
+  toast(name.toUpperCase()+" registered on Base! 🎉","✓");
+  MARKET_AGENTS.push({
+    emoji:"🤖",name:name.toUpperCase(),model:document.getElementById("agentModel").value||"Custom",
+    spec:type,rate:rate?parseInt(rate):50,rating:5.0,jobs:0,tags:[type],col
+  });
+}
+
+function resetRegForm(){
+  ["agentName","agentRate","agentEndpoint","agentDesc"].forEach(id=>{
+    const el=document.getElementById(id);if(el){el.value="";el.disabled=false;}
+  });
+  ["agentType","agentModel"].forEach(id=>{
+    const el=document.getElementById(id);if(el){el.value="";el.disabled=false;}
+  });
+  document.getElementById("txSteps").style.display="none";
+  document.getElementById("cfBody").style.display="flex";
+  document.getElementById("cfFooter").style.display="flex";
+  document.getElementById("cfSubmit").disabled=false;
+  document.getElementById("cfSubmit").textContent="Register Agent on Base →";
+  document.getElementById("regSuccess").classList.remove("show");
+  const wf=document.getElementById("agentWallet");
+  if(wf) wf.value=wallet||"";
+  for(let i=1;i<=5;i++){const el=document.getElementById("txs"+i);if(el)el.className="tx-step";}
+}
+
+/* ── INIT ── */
 function initApp(){
   initTicker();renderLB();renderNet();initConsole();renderDocs();updStats();updClock();
-  setInterval(tick,2000);setInterval(updClock,1000);
-  setInterval(()=>{blk+=Math.floor(Math.random()*3)+1;const el=document.getElementById("blknum");if(el)el.textContent=blk.toLocaleString();},13000);
-  if(typeof window.ethereum!=="undefined"){window.ethereum.on("accountsChanged",accs=>{if(accs.length===0){wallet=null;location.reload();}else{wallet=accs[0];onConnected();}});}
+  setInterval(tick,2000);
+  setInterval(updClock,1000);
+  setInterval(()=>{
+    blk+=Math.floor(Math.random()*3)+1;
+    const el=document.getElementById("blknum");
+    if(el) el.textContent=blk.toLocaleString();
+  },13000);
+  if(typeof window.ethereum!=="undefined"){
+    window.ethereum.on("accountsChanged",accs=>{
+      if(accs.length===0){wallet=null;location.reload();}
+      else{wallet=accs[0];onConnected();}
+    });
+  }
 }
 
 let lfCount=247;
-setInterval(()=>{if(Math.random()>.72)lfCount+=Math.floor(Math.random()*3);const el=document.getElementById("lf-agents");if(el)el.textContent=lfCount+" agents";},3200);
+setInterval(()=>{
+  if(Math.random()>.72) lfCount+=Math.floor(Math.random()*3);
+  const el=document.getElementById("lf-agents");
+  if(el) el.textContent=lfCount+" agents";
+},3200);
+
 </script>
 </body>
 </html>
