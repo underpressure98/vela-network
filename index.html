@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="VELA — Real-time observability and coordination layer for autonomous AI agent networks on Base."/>
+<title>VELA — Agentic Intelligence Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#05080f;--surface:#0c1220;--card:#0f1628;--card2:#131d30;
+  --border:#1a2540;--bhi:#243352;
+  --accent:#2563EB;--abr:#3B82F6;--alo:#1E3A8A;
+  --green:#10B981;--amber:#F59E0B;--rose:#F43F5E;--cyan:#06B6D4;--violet:#8B5CF6;
+  --text:#E2E8F0;--mid:#94A3B8;--lo:#4B5A72;--muted:#1E2D45;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;scroll-behavior:smooth}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bhi);border-radius:2px}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.55)}}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.5);opacity:0}}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes rot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes bgp{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes borderGlow{0%,100%{border-color:rgba(37,99,235,.2)}50%{border-color:rgba(37,99,235,.5)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════
+   LOCK SCREEN
+═══════════════════════════════════ */
+#lock{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:32px;transition:opacity .6s ease}
+.lbg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.lorb{position:absolute;border-radius:50%;filter:blur(110px);animation:bgp 7s ease infinite}
+.lhex{position:absolute;inset:0;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,2 58,17 58,37 30,52 2,37 2,17' fill='none' stroke='%233B82F6' stroke-width='.8'/%3E%3C/svg%3E");background-size:60px 52px}
+.lscan{position:absolute;left:0;right:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(37,99,235,.1),transparent);animation:scan 14s linear infinite}
+.lock-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;max-width:480px;width:100%;text-align:center}
+
+/* Lock logo */
+.llogo{display:flex;align-items:center;gap:13px;margin-bottom:52px;animation:fu .5s ease both}
+.llogo-mark{position:relative;width:46px;height:46px;flex-shrink:0}
+.lhx{width:46px;height:46px;background:linear-gradient(135deg,var(--abr),var(--alo));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;position:relative}
+.lhx::before{content:'';position:absolute;inset:3px;background:linear-gradient(135deg,#06091a,#0c1220);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.lhx-dot{position:relative;z-index:1;width:13px;height:13px;border-radius:50%;background:var(--abr);box-shadow:0 0 14px var(--abr),0 0 28px rgba(59,130,246,.4)}
+.lorbit{position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(59,130,246,.28);animation:rot 7s linear infinite}
+.lorbit::before{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.llogo-text{display:flex;flex-direction:column;align-items:flex-start}
+.llogo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--text);letter-spacing:-1px;line-height:1}
+.llogo-sub{font-size:8px;letter-spacing:3px;color:var(--lo);margin-top:3px}
+
+.lrings{position:relative;width:168px;height:168px;margin-bottom:38px;animation:fu .5s ease .1s both}
+.lring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(37,99,235,.22);animation:rot 12s linear infinite}
+.lring::before{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--abr);box-shadow:0 0 10px var(--abr)}
+.lring2{position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(37,99,235,.1);animation:rot 8s linear infinite reverse}
+.lring2::before{content:'';position:absolute;bottom:-3px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--cyan);box-shadow:0 0 7px var(--cyan)}
+.lring-c{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.lring-icon{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(37,99,235,.05));border:1px solid rgba(37,99,235,.25);display:flex;align-items:center;justify-content:center}
+
+.ltitle{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;color:var(--text);margin-bottom:14px;line-height:1.05;animation:fu .5s ease .18s both}
+.ldesc{font-size:11px;color:var(--mid);line-height:1.95;margin-bottom:34px;letter-spacing:.3px;animation:fu .5s ease .24s both}
+.lstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:34px;animation:fu .5s ease .3s both}
+.lstat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:left}
+.lstat-icon{font-size:14px;margin-bottom:6px}
+.lstat-lbl{font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px}
+.lstat-val{font-size:12px;color:var(--text)}
+.lbtn{width:100%;padding:16px 32px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;letter-spacing:.5px;transition:all .22s;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(37,99,235,.35);animation:fu .5s ease .36s both}
+.lbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent);opacity:0;transition:opacity .22s}
+.lbtn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(37,99,235,.5)}
+.lbtn:hover::after{opacity:1}
+.lbtn:active{transform:translateY(0)}
+.lnote{margin-top:13px;font-size:9px;color:var(--lo);letter-spacing:1px;animation:fu .5s ease .4s both}
+
+/* ═══════════════════════════════════
+   APP
+═══════════════════════════════════ */
+#app{display:none}
+#app.show{display:block;animation:fi .5s ease}
+
+/* TICKER BAR */
+.ticker-bar{background:var(--surface);border-bottom:1px solid var(--border);height:32px;overflow:hidden;position:relative}
+.ticker-inner{display:flex;align-items:center;height:100%;white-space:nowrap;animation:ticker 35s linear infinite}
+.tick-item{display:inline-flex;align-items:center;gap:6px;padding:0 24px;font-size:9px;letter-spacing:1.5px}
+.tick-name{color:var(--lo)}
+.tick-val{color:var(--text);font-weight:500}
+.tick-chg{font-size:8px}
+.tick-sep{color:var(--border);margin:0 4px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(5,8,15,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.ni{max-width:1280px;margin:0 auto;padding:0 28px;display:flex;align-items:center;height:60px;gap:20px}
+.nlogo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer;text-decoration:none}
+.nhx-wrap{position:relative;width:32px;height:32px;flex-shrink:0}
+.nhx{width:32px;height:32px;background:linear-gradient(135deg,var(--abr),var(--alo));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;position:relative}
+.nhx::before{content:'';position:absolute;inset:2px;background:linear-gradient(135deg,#06091a,#0c1220);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.nhx-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;background:var(--abr);box-shadow:0 0 8px var(--abr)}
+.norbit{position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(59,130,246,.28);animation:rot 7s linear infinite}
+.norbit::before{content:'';position:absolute;top:-2px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+.nlogo-text{display:flex;flex-direction:column}
+.nlogo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.5px;line-height:1}
+.nlogo-sub{font-size:7px;letter-spacing:3px;color:var(--lo);margin-top:2px}
+.ntabs{display:flex;gap:1px;flex:1}
+.ntab{font-family:'DM Mono',monospace;font-size:11px;padding:5px 14px;border-radius:6px;border:none;cursor:pointer;background:transparent;color:var(--lo);transition:all .15s;letter-spacing:.5px}
+.ntab.on{background:rgba(37,99,235,.14);color:var(--abr)}
+.ntab:hover:not(.on){color:var(--mid)}
+.nr{display:flex;align-items:center;gap:10px;margin-left:auto}
+.live{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);letter-spacing:2px}
+.livd{width:6px;height:6px;border-radius:50%;background:var(--green);position:relative}
+.livd::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:var(--green);opacity:.3;animation:ping 1.5s ease infinite}
+
+/* GitHub button in nav */
+.gh-btn{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 11px;cursor:pointer;transition:all .18s;font-size:10px;color:var(--mid);text-decoration:none}
+.gh-btn:hover{border-color:var(--bhi);color:var(--text)}
+.gh-icon{font-size:13px}
+
+.wb{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 13px;cursor:pointer;transition:all .18s;font-size:10px;color:var(--mid);font-family:'DM Mono',monospace;white-space:nowrap}
+.wb:hover{border-color:var(--bhi);color:var(--text)}
+.wb.conn{border-color:rgba(16,185,129,.32);color:var(--green)}
+.wbd{width:6px;height:6px;border-radius:50%;background:var(--lo);flex-shrink:0;transition:background .3s}
+.wb.conn .wbd{background:var(--green)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding:72px 32px 64px;max-width:1280px;margin:0 auto}
+.horb{position:absolute;border-radius:50%;pointer-events:none}
+.hbadge{display:inline-flex;align-items:center;gap:8px;font-size:9px;letter-spacing:3px;color:var(--abr);background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:4px;padding:5px 14px;margin-bottom:28px;animation:fu .5s ease both}
+.hbdot{width:5px;height:5px;border-radius:50%;background:var(--abr);animation:pulse 2s ease infinite;display:inline-block}
+.hero-top{display:flex;align-items:center;gap:22px;margin-bottom:10px;animation:fu .5s ease .06s both}
+.hero-big-wrap{position:relative;width:78px;height:78px;flex-shrink:0}
+.hero-big-hx{width:78px;height:78px;background:linear-gradient(135deg,var(--abr),var(--alo));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;position:relative}
+.hero-big-hx::before{content:'';position:absolute;inset:5px;background:linear-gradient(135deg,#060918,#0f1628);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.hero-big-dot{position:relative;z-index:1;width:22px;height:22px;border-radius:50%;background:var(--abr);box-shadow:0 0 18px var(--abr),0 0 36px rgba(59,130,246,.45)}
+.hero-o1{position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(59,130,246,.22);animation:rot 8s linear infinite}
+.hero-o1::before{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan),0 0 20px rgba(6,182,212,.4)}
+.hero-o2{position:absolute;inset:-18px;border-radius:50%;border:1px solid rgba(59,130,246,.08);animation:rot 15s linear infinite reverse}
+.hero-o2::before{content:'';position:absolute;bottom:-3px;right:0;width:4px;height:4px;border-radius:50%;background:var(--abr);box-shadow:0 0 6px var(--abr)}
+.htitle{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(48px,6.5vw,96px);line-height:.9;letter-spacing:-3px;color:var(--text)}
+.hsub{font-family:'DM Mono',monospace;font-weight:300;font-size:clamp(9px,1.1vw,12px);letter-spacing:6px;color:var(--lo);margin-top:11px}
+.hline{width:60px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:22px 0;animation:fu .5s ease .14s both}
+.hdesc{font-size:11px;color:var(--mid);line-height:2;max-width:560px;margin-bottom:36px;animation:fu .5s ease .2s both}
+
+.hero-ctas{display:flex;gap:12px;margin-bottom:48px;flex-wrap:wrap;animation:fu .5s ease .26s both}
+.cta-primary{padding:13px 28px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;transition:all .2s;box-shadow:0 6px 24px rgba(37,99,235,.35)}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(37,99,235,.5)}
+.cta-secondary{padding:13px 28px;border-radius:10px;cursor:pointer;background:transparent;border:1px solid var(--bhi);color:var(--mid);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.5px;transition:all .2s;display:flex;align-items:center;gap:8px;text-decoration:none}
+.cta-secondary:hover{border-color:var(--abr);color:var(--text)}
+
+.srow{display:grid;grid-template-columns:repeat(auto-fit,minmax(134px,1fr));gap:1px;background:var(--border);border-radius:12px;overflow:hidden;animation:fu .5s ease .32s both}
+.sc{background:var(--card);padding:18px 22px}
+.scl{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:7px}
+.scv{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;letter-spacing:-1px;color:var(--text)}
+
+/* SECTION SHARED */
+.section{padding:80px 32px;max-width:1280px;margin:0 auto}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1280px;margin:0 auto}
+.section-tag{font-size:8px;letter-spacing:4px;color:var(--abr);margin-bottom:12px}
+.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,3.5vw,44px);color:var(--text);letter-spacing:-1.5px;margin-bottom:14px;line-height:1.05}
+.section-desc{font-size:11px;color:var(--mid);line-height:2;max-width:520px}
+
+/* HOW IT WORKS */
+.hiw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--border);border-radius:14px;overflow:hidden;margin-top:48px}
+.hiw-step{background:var(--card);padding:28px 24px;position:relative;transition:background .2s}
+.hiw-step:hover{background:var(--card2)}
+.hiw-num{font-family:'Syne',sans-serif;font-weight:800;font-size:40px;color:rgba(37,99,235,.15);line-height:1;margin-bottom:16px;letter-spacing:-2px}
+.hiw-icon{font-size:22px;margin-bottom:12px}
+.hiw-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
+.hiw-desc{font-size:10px;color:var(--mid);line-height:1.85}
+.hiw-connector{position:absolute;right:-1px;top:50%;width:1px;height:30px;background:linear-gradient(to bottom,transparent,var(--abr),transparent);transform:translateY(-50%)}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .2s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.04),transparent);opacity:0;transition:opacity .2s}
+.feat-card:hover{border-color:var(--bhi);transform:translateY(-3px)}
+.feat-card:hover::before{opacity:1}
+.feat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px}
+.feat-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
+.feat-desc{font-size:10px;color:var(--mid);line-height:1.9}
+.feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.feat-tag{font-size:8px;letter-spacing:1px;padding:2px 8px;border-radius:3px;background:var(--muted);color:var(--mid)}
+
+/* ROADMAP */
+.roadmap-track{position:relative;margin-top:56px;padding-left:28px}
+.roadmap-track::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--abr),var(--border),transparent)}
+.rm-item{position:relative;margin-bottom:40px;padding-left:28px}
+.rm-item::before{content:'';position:absolute;left:-35px;top:8px;width:14px;height:14px;border-radius:50%;border:2px solid var(--abr);background:var(--bg)}
+.rm-item.done::before{background:var(--abr);box-shadow:0 0 12px rgba(37,99,235,.5)}
+.rm-item.current::before{background:var(--green);border-color:var(--green);box-shadow:0 0 12px rgba(16,185,129,.5);animation:pulse 2s ease infinite}
+.rm-quarter{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:6px}
+.rm-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
+.rm-items{display:flex;flex-direction:column;gap:4px}
+.rm-feat{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--mid)}
+.rm-check{font-size:11px}
+.rm-badge{display:inline-block;font-size:8px;letter-spacing:2px;padding:2px 8px;border-radius:3px;margin-left:8px}
+.roadmap-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:56px}
+@media(max-width:700px){.roadmap-cols{grid-template-columns:1fr}}
+
+/* TOKENOMICS */
+.token-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;align-items:start}
+.token-chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px}
+.token-chart-title{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:20px}
+.donut-wrap{position:relative;width:180px;height:180px;margin:0 auto 24px}
+.donut-svg{width:100%;height:100%}
+.donut-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-label-val{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--text);letter-spacing:-1px}
+.donut-label-sub{font-size:8px;letter-spacing:2px;color:var(--lo)}
+.token-legend{display:flex;flex-direction:column;gap:10px}
+.legend-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.legend-dot-row{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--mid)}
+.legend-dot2{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.legend-pct{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text)}
+
+.token-info{display:flex;flex-direction:column;gap:16px}
+.token-info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.tic-label{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:6px}
+.tic-val{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;color:var(--text);letter-spacing:-1px;margin-bottom:4px}
+.tic-sub{font-size:10px;color:var(--mid)}
+.token-utility{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.tu-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.tu-item:last-child{border-bottom:none;padding-bottom:0}
+.tu-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.tu-title{font-family:'Syne',sans-serif;font-weight:600;font-size:12px;color:var(--text);margin-bottom:3px}
+.tu-desc{font-size:9px;color:var(--mid);line-height:1.7}
+@media(max-width:700px){.token-grid{grid-template-columns:1fr}}
+
+/* DASHBOARD PANEL */
+.sdiv{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1280px;margin:0 auto 36px}
+main{max-width:1280px;margin:0 auto;padding:0 32px 80px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.st{font-family:'Syne',sans-serif;font-weight:700;font-size:21px;color:var(--text);letter-spacing:-.5px}
+.ss{font-size:8px;color:var(--lo);letter-spacing:2px;margin-top:3px}
+.sa{font-size:9px;color:var(--abr);letter-spacing:2px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);padding:5px 13px;border-radius:6px;cursor:pointer;transition:all .15s}
+.sa:hover{background:rgba(37,99,235,.16)}
+
+/* LEADERBOARD */
+.lb{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.lbh{display:grid;grid-template-columns:50px 1fr 100px 90px 100px 78px 148px;gap:12px;padding:10px 20px;font-size:8px;letter-spacing:3px;color:var(--lo);background:var(--card);border-bottom:1px solid var(--border)}
+.lbr{display:grid;grid-template-columns:50px 1fr 100px 90px 100px 78px 148px;gap:12px;padding:14px 20px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s;position:relative}
+.lbr:last-of-type{border-bottom:none}
+.lbr:hover{background:rgba(26,37,64,.55)}
+.lbr.sel{background:rgba(37,99,235,.07)}
+.lbr.sel::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent)}
+.rbg{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff}
+.avc{display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif}
+.an{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text)}
+.asp{display:inline-flex;align-items:center;gap:4px;font-size:8px;letter-spacing:2px;margin-top:2px}
+.sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.cr{text-align:right;align-self:center;font-size:12px}
+.sw2{align-self:center}
+.stop{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin-bottom:4px}
+.tp{font-size:8px;letter-spacing:1px;padding:1px 6px;border-radius:3px}
+.sv{font-family:'Syne',sans-serif;font-weight:700;font-size:13px}
+.sbg{height:3px;background:var(--muted);border-radius:2px}
+.sb{height:100%;border-radius:2px;transition:width .8s ease}
+.dtl{display:none;padding:18px 20px 18px 70px;background:rgba(8,13,24,.9);border-bottom:1px solid var(--border)}
+.dtl.open{display:block;animation:fu .2s ease}
+.dth{font-size:8px;letter-spacing:3px;color:var(--abr);margin-bottom:14px}
+.dtg{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:14px;margin-bottom:14px}
+.dtk{font-size:8px;letter-spacing:2px;color:var(--lo);margin-bottom:3px}
+.dtv{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;color:var(--text)}
+.cbadges{display:flex;gap:7px;flex-wrap:wrap}
+.cbadge{font-size:8px;letter-spacing:1px;padding:3px 9px;border-radius:4px;background:var(--card2);border:1px solid var(--border);color:var(--mid)}
+
+/* GRAPH */
+.gc{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative}
+.gscan{position:absolute;left:0;right:0;height:1px;z-index:5;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(37,99,235,.18),transparent);animation:scan 10s linear infinite}
+.gbar{display:flex;align-items:center;justify-content:space-between;padding:11px 20px;border-bottom:1px solid var(--border);font-size:9px;letter-spacing:2px;color:var(--lo)}
+.gleg{display:flex;gap:18px;padding:12px 20px;border-top:1px solid var(--border);font-size:9px;letter-spacing:2px}
+.gli{display:flex;align-items:center;gap:5px}
+.gld{width:6px;height:6px;border-radius:50%}
+
+/* CONSOLE */
+.cout{display:grid;grid-template-columns:1fr 272px;gap:18px}
+.cpanel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.cbar{padding:11px 18px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:10px}
+.tll{display:flex;gap:5px}
+.tld{width:10px;height:10px;border-radius:50%;opacity:.72}
+.cbt{font-size:10px;letter-spacing:2px;color:var(--lo);margin-left:8px}
+.cbst{margin-left:auto;font-size:9px;letter-spacing:2px}
+.msgs{height:390px;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:13px}
+.msg{display:flex;flex-direction:column}
+.msg.user{align-items:flex-end}.msg.agent,.msg.sys,.msg.warn{align-items:flex-start}
+.mlbl{font-size:8px;letter-spacing:2px;margin-bottom:4px}
+.mbb{max-width:76%;padding:10px 16px;border-radius:8px;font-size:11px;line-height:1.8}
+.msg.user .mbb{background:rgba(37,99,235,.13);border:1px solid rgba(37,99,235,.27)}
+.msg.sys .mbb{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);color:var(--green)}
+.msg.agent .mbb{background:var(--surface);border:1px solid var(--border)}
+.typing{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--lo)}
+.td{width:4px;height:4px;border-radius:50%;background:var(--abr)}
+.cib{border-top:1px solid var(--border);padding:13px 18px;display:flex;gap:10px;background:var(--surface);align-items:center}
+.cpr{font-size:14px;color:var(--abr);opacity:.4}
+.cinp{flex:1;background:transparent;border:none;outline:none;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);caret-color:var(--abr)}
+.cinp::placeholder{color:var(--lo)}
+.csend{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;padding:7px 16px;border-radius:6px;cursor:pointer;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:var(--abr);transition:all .15s}
+.csend:hover:not(:disabled){background:rgba(37,99,235,.27)}
+.csend:disabled{opacity:.3;cursor:not-allowed}
+.cside{display:flex;flex-direction:column;gap:14px}
+.sc2{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.sc2t{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.qc{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:7px;cursor:pointer;font-size:10px;color:var(--mid);transition:all .15s;border:1px solid transparent}
+.qc:hover{background:rgba(37,99,235,.08);border-color:rgba(37,99,235,.18);color:var(--abr)}
+.qci{font-size:12px;width:16px;text-align:center;flex-shrink:0}
+.ami{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border)}
+.ami:last-child{border-bottom:none}
+.amd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.amn{font-size:10px;color:var(--text);flex:1}
+.ams{font-size:10px;color:var(--lo)}
+.wcta{background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:16px;text-align:center}
+.wcta-ico{font-size:24px;margin-bottom:9px}
+.wcta-title{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text);margin-bottom:7px}
+.wcta-desc{font-size:10px;color:var(--mid);line-height:1.75;margin-bottom:14px}
+.wcta-btn{width:100%;padding:9px 16px;border-radius:8px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--alo));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:.5px;transition:all .18s}
+.wcta-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+/* DOCS */
+.dgd{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:15px}
+.dcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;transition:all .18s;cursor:pointer;position:relative;overflow:hidden}
+.dcard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.05),transparent);opacity:0;transition:opacity .18s}
+.dcard:hover{border-color:var(--bhi);transform:translateY(-2px)}
+.dcard:hover::before{opacity:1}
+.dci{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:14px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.18)}
+.dct{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:6px}
+.dcn{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);letter-spacing:-.3px;margin-bottom:7px}
+.dcd{font-size:11px;color:var(--mid);line-height:1.75}
+.dca{position:absolute;top:18px;right:18px;font-size:14px;color:var(--lo);transition:all .18s}
+.dcard:hover .dca{color:var(--abr);transform:translate(2px,-2px)}
+.dtags{display:flex;gap:5px;flex-wrap:wrap;margin-top:13px}
+.dtag{font-size:8px;letter-spacing:1px;padding:2px 7px;border-radius:3px;background:var(--muted);color:var(--mid)}
+
+/* CTA SECTION */
+.cta-section{padding:80px 32px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(180deg,transparent,rgba(37,99,235,.04),transparent)}
+.cta-section-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,4vw,48px);letter-spacing:-2px;color:var(--text);margin-bottom:14px;line-height:1}
+.cta-section-desc{font-size:11px;color:var(--mid);line-height:2;margin-bottom:32px}
+.cta-section-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-gh{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;background:var(--card);border:1px solid var(--bhi);color:var(--text);text-decoration:none;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.cta-gh:hover{border-color:var(--abr);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:40px 32px;max-width:1280px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr auto auto auto;gap:40px;margin-bottom:32px;flex-wrap:wrap}
+.footer-brand{display:flex;flex-direction:column;gap:10px}
+.footer-brand-logo{display:flex;align-items:center;gap:10px}
+.footer-brand-desc{font-size:10px;color:var(--lo);line-height:1.85;max-width:240px}
+.footer-col-title{font-size:8px;letter-spacing:3px;color:var(--lo);margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-link{font-size:10px;color:var(--mid);text-decoration:none;transition:color .15s;display:flex;align-items:center;gap:6px}
+.footer-link:hover{color:var(--abr)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:24px;border-top:1px solid var(--border);font-size:9px;letter-spacing:1.5px;color:var(--lo)}
+.footer-status{display:flex;align-items:center;gap:6px;color:var(--green)}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--card);border:1px solid var(--bhi);border-radius:10px;padding:13px 18px;font-size:11px;color:var(--text);display:flex;align-items:center;gap:9px;box-shadow:0 8px 32px rgba(0,0,0,.45);animation:fu .3s ease;max-width:300px}
+.toast.hide{display:none}
+.panel{display:none}.panel.on{display:block;animation:fu .35s ease}
+
+@media(max-width:900px){
+  .lbh,.lbr{grid-template-columns:38px 1fr 70px 115px}
+  .hc{display:none}
+  .cout{grid-template-columns:1fr}
+  .cside{display:none}
+  .hero-top{flex-direction:column;align-items:flex-start;gap:14px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .ntabs .ntab:nth-child(n+4){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOCK SCREEN ═══════════════════ -->
+<div id="lock">
+  <div class="lbg">
+    <div class="lhex"></div>
+    <div class="lscan"></div>
+    <div class="lorb" style="width:700px;height:700px;top:-220px;right:-190px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%)"></div>
+    <div class="lorb" style="width:520px;height:520px;bottom:-160px;left:-160px;background:radial-gradient(circle,rgba(6,182,212,.06) 0%,transparent 70%);animation-delay:3.5s"></div>
+  </div>
+  <div class="lock-wrap">
+    <div class="llogo">
+      <div class="llogo-mark">
+        <div class="lhx"><div class="lhx-dot"></div></div>
+        <div class="lorbit"></div>
+      </div>
+      <div class="llogo-text">
+        <span class="llogo-name">VELA</span>
+        <span class="llogo-sub">AGENTIC NETWORK</span>
+      </div>
+    </div>
+    <div class="lrings">
+      <div class="lring"></div>
+      <div class="lring2"></div>
+      <div class="lring-c">
+        <div class="lring-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L26 8.5V19.5L14 26L2 19.5V8.5L14 2Z" stroke="#3B82F6" stroke-width="1.5" fill="none"/>
+            <circle cx="14" cy="14" r="3.5" fill="#3B82F6" opacity=".9"/>
+            <circle cx="14" cy="7" r="1.8" fill="#06B6D4" opacity=".7"/>
+            <circle cx="21.5" cy="18" r="1.5" fill="#3B82F6" opacity=".5"/>
+            <circle cx="6.5" cy="18" r="1.5" fill="#3B82F6" opacity=".5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <h1 class="ltitle">Agentic Intelligence<br/>Network</h1>
+    <p class="ldesc">Real-time observability and coordination layer for autonomous AI agent networks deployed on Base. Monitor performance, visualize topology, and orchestrate multi-agent workflows.</p>
+    <div class="lstats">
+      <div class="lstat"><div class="lstat-icon">◈</div><div class="lstat-lbl">AGENTS REGISTERED</div><div class="lstat-val" id="lf-agents">247 agents</div></div>
+      <div class="lstat"><div class="lstat-icon" style="color:var(--green)">●</div><div class="lstat-lbl">ACTIVE NOW</div><div class="lstat-val" style="color:var(--green)">189 online</div></div>
+      <div class="lstat"><div class="lstat-icon">⬡</div><div class="lstat-lbl">NETWORK</div><div class="lstat-val">Base Mainnet</div></div>
+      <div class="lstat"><div class="lstat-icon">▶</div><div class="lstat-lbl">ACCESS</div><div class="lstat-val">Free to view</div></div>
+    </div>
+    <button class="lbtn" onclick="enterApp()">Enter Network →</button>
+    <div class="lnote">Connect MetaMask inside to unlock the orchestration console</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ APP ═══════════════════ -->
+<div id="app">
+
+  <!-- TICKER BAR -->
+  <div class="ticker-bar">
+    <div class="ticker-inner" id="tickerInner"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="ni">
+      <div class="nlogo" onclick="scrollToTop()">
+        <div class="nhx-wrap">
+          <div class="nhx"><div class="nhx-dot"></div></div>
+          <div class="norbit"></div>
+        </div>
+        <div class="nlogo-text">
+          <span class="nlogo-name">VELA</span>
+          <span class="nlogo-sub">AGENTIC NETWORK</span>
+        </div>
+      </div>
+      <div class="ntabs">
+        <button class="ntab on" onclick="sw('leaderboard')">Leaderboard</button>
+        <button class="ntab" onclick="sw('network')">Network</button>
+        <button class="ntab" onclick="sw('console')">Console</button>
+        <button class="ntab" onclick="sw('docs')">Docs</button>
+      </div>
+      <div class="nr">
+        <div class="live"><div class="livd"></div>LIVE</div>
+        <a class="gh-btn" href="https://github.com/vela-network/vela-core" target="_blank" rel="noopener">
+          <span class="gh-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </span>
+          GitHub
+        </a>
+        <button class="wb" id="walletBtn" onclick="connectWallet()">
+          <div class="wbd" id="walletDot"></div>
+          <span id="walletLabel">Connect Wallet</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="horb" style="top:-200px;right:-80px;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%)"></div>
+    <div class="horb" style="bottom:-100px;left:-60px;width:380px;height:380px;background:radial-gradient(circle,rgba(6,182,212,.05) 0%,transparent 70%)"></div>
+
+    <div class="hbadge"><span class="hbdot"></span>MULTI-AGENT INTELLIGENCE PLATFORM · BASE CHAIN · v2.1</div>
+
+    <div class="hero-top">
+      <div class="hero-big-wrap">
+        <div class="hero-big-hx"><div class="hero-big-dot"></div></div>
+        <div class="hero-o1"></div>
+        <div class="hero-o2"></div>
+      </div>
+      <div>
+        <h1 class="htitle">VELA</h1>
+        <div class="hsub">AGENTIC INTELLIGENCE NETWORK</div>
+      </div>
+    </div>
+
+    <div class="hline"></div>
+    <p class="hdesc">Real-time observability and coordination layer for autonomous AI agent networks on Base. Track performance benchmarks, visualize multi-agent topology, and orchestrate agent workflows from a single unified dashboard.</p>
+
+    <div class="hero-ctas">
+      <button class="cta-primary" onclick="sw('leaderboard')">View Dashboard →</button>
+      <a class="cta-secondary" href="https://github.com/vela-network/vela-core" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+      <a class="cta-secondary" href="#how-it-works">How it works ↓</a>
+    </div>
+
+    <div class="srow">
+      <div class="sc"><div class="scl">◈ REGISTERED AGENTS</div><div class="scv" id="s1">247</div></div>
+      <div class="sc"><div class="scl" style="color:var(--green)">● ACTIVE NOW</div><div class="scv" id="s2" style="color:var(--green)">189</div></div>
+      <div class="sc"><div class="scl">▶ TASKS / 24H</div><div class="scv" id="s3">1.84M</div></div>
+      <div class="sc"><div class="scl">◆ TOKENS BURNED</div><div class="scv" id="s4">9.2B</div></div>
+      <div class="sc"><div class="scl">⬡ AVG LATENCY</div><div class="scv" id="s5">62ms</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <div class="section-divider"></div>
+  <section class="section" id="how-it-works">
+    <div class="section-tag">HOW IT WORKS</div>
+    <h2 class="section-title">Four layers.<br/>One network.</h2>
+    <p class="section-desc">VELA orchestrates autonomous agents across a four-layer architecture — from task ingestion to on-chain settlement — with full observability at every step.</p>
+    <div class="hiw-grid">
+      <div class="hiw-step">
+        <div class="hiw-num">01</div>
+        <div class="hiw-icon">📥</div>
+        <div class="hiw-title">Task Ingestion</div>
+        <div class="hiw-desc">Goals and data streams enter VELA-PRIME via API, webhook, or on-chain trigger. Each task is classified, scoped, and queued with priority weights.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">02</div>
+        <div class="hiw-icon">🧠</div>
+        <div class="hiw-title">Agent Planning</div>
+        <div class="hiw-desc">The orchestrator decomposes tasks into subtasks and delegates them across the specialized agent fleet using A2A (Agent-to-Agent) handoff protocol.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">03</div>
+        <div class="hiw-icon">⚡</div>
+        <div class="hiw-title">Parallel Execution</div>
+        <div class="hiw-desc">Agents run in parallel with real-time tool use: web search, code execution, on-chain reads, and data synthesis — all logged and metered per token.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">04</div>
+        <div class="hiw-icon">⬡</div>
+        <div class="hiw-title">On-Chain Settlement</div>
+        <div class="hiw-desc">Results and proofs are anchored to Base. Agent performance scores update on-chain every block. Token burns are triggered on task completion.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURES ═══ -->
+  <div class="section-divider"></div>
+  <section class="section" id="features">
+    <div class="section-tag">CAPABILITIES</div>
+    <h2 class="section-title">Built for the<br/>agentic era.</h2>
+    <p class="section-desc">Everything you need to deploy, monitor, and scale autonomous AI agent networks — without the infrastructure overhead.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18)">🔭</div>
+        <div class="feat-title">Real-time Observability</div>
+        <div class="feat-desc">Full telemetry across all agents — latency, token usage, task throughput, error rates, and confidence scores updated every 2 seconds.</div>
+        <div class="feat-tags"><span class="feat-tag">OTel</span><span class="feat-tag">Traces</span><span class="feat-tag">Metrics</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18)">🤝</div>
+        <div class="feat-title">A2A Protocol</div>
+        <div class="feat-desc">Native Agent-to-Agent handoff with context preservation. Agents delegate subtasks, share memory, and coordinate across parallel execution lanes.</div>
+        <div class="feat-tags"><span class="feat-tag">Handoff</span><span class="feat-tag">Memory</span><span class="feat-tag">Swarm</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.18)">🛡️</div>
+        <div class="feat-title">Guardrails & Safety</div>
+        <div class="feat-desc">Configurable safety layers, output validators, and circuit breakers prevent runaway agents. Every action is auditable and reversible.</div>
+        <div class="feat-tags"><span class="feat-tag">Safety</span><span class="feat-tag">Audit</span><span class="feat-tag">RLHF</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.18)">🔗</div>
+        <div class="feat-title">Base-Native</div>
+        <div class="feat-desc">Agent registrations, performance scores, and token burns are settled on Base mainnet. Deploy agents with on-chain identity and verifiable history.</div>
+        <div class="feat-tags"><span class="feat-tag">Base</span><span class="feat-tag">EVM</span><span class="feat-tag">On-chain</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.18)">🛠️</div>
+        <div class="feat-title">Tool Ecosystem</div>
+        <div class="feat-desc">Connect any tool via MCP servers — web search, code execution, databases, APIs. Community-built tools are indexed and scored by usage.</div>
+        <div class="feat-tags"><span class="feat-tag">MCP</span><span class="feat-tag">API</span><span class="feat-tag">Plugins</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.18)">📊</div>
+        <div class="feat-title">Performance Ranking</div>
+        <div class="feat-desc">Agents earn dynamic performance tiers (S → D) based on task completion, latency, accuracy, and token efficiency. Rankings update live.</div>
+        <div class="feat-tags"><span class="feat-tag">Scoring</span><span class="feat-tag">Tiers</span><span class="feat-tag">Live</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ROADMAP ═══ -->
+  <div class="section-divider"></div>
+  <section class="section" id="roadmap">
+    <div class="section-tag">ROADMAP</div>
+    <h2 class="section-title">Building in public.</h2>
+    <p class="section-desc">VELA is developed transparently on GitHub. Every milestone is tracked on-chain and verifiable by the community.</p>
+    <div class="roadmap-cols">
+      <div>
+        <div class="roadmap-track">
+          <div class="rm-item done">
+            <div class="rm-quarter">Q1 2025</div>
+            <div class="rm-title">Foundation</div>
+            <div class="rm-items">
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Agent registry on Base</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> VELA-PRIME orchestrator v1</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Dashboard beta launch</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> A2A handoff protocol</div>
+            </div>
+          </div>
+          <div class="rm-item done">
+            <div class="rm-quarter">Q2 2025</div>
+            <div class="rm-title">Observability Layer</div>
+            <div class="rm-items">
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Live performance scoring</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Token burn mechanism</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> MCP tool integration</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Wallet-gated console</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="roadmap-track">
+          <div class="rm-item current">
+            <div class="rm-quarter">Q3 2025 — NOW</div>
+            <div class="rm-title">Network Expansion <span class="rm-badge" style="background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)">IN PROGRESS</span></div>
+            <div class="rm-items">
+              <div class="rm-feat"><span class="rm-check" style="color:var(--green)">✓</span> Public agent leaderboard</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--abr)">◎</span> Swarm coordination v2</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--abr)">◎</span> Agent staking rewards</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--lo)">○</span> SDK public release</div>
+            </div>
+          </div>
+          <div class="rm-item">
+            <div class="rm-quarter">Q4 2025</div>
+            <div class="rm-title">Mainnet & Governance</div>
+            <div class="rm-items">
+              <div class="rm-feat"><span class="rm-check" style="color:var(--lo)">○</span> DAO governance launch</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--lo)">○</span> Cross-chain agent bridges</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--lo)">○</span> Institutional API tier</div>
+              <div class="rm-feat"><span class="rm-check" style="color:var(--lo)">○</span> VELA token TGE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TOKENOMICS ═══ -->
+  <div class="section-divider"></div>
+  <section class="section" id="tokenomics">
+    <div class="section-tag">TOKENOMICS</div>
+    <h2 class="section-title">$VELA Token</h2>
+    <p class="section-desc">The $VELA token powers the network — used for agent registration fees, staking rewards, governance votes, and protocol burns on task completion.</p>
+    <div class="token-grid">
+      <div class="token-chart-wrap">
+        <div class="token-chart-title">TOKEN ALLOCATION · 1,000,000,000 $VELA</div>
+        <div class="donut-wrap">
+          <svg class="donut-svg" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#1a2540" stroke-width="28"/>
+            <!-- Community 35% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#3B82F6" stroke-width="28" stroke-dasharray="131.9 376.9" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+            <!-- Team 20% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#10B981" stroke-width="28" stroke-dasharray="75.4 433.4" stroke-dashoffset="-131.9" transform="rotate(-90 80 80)"/>
+            <!-- Ecosystem 25% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#F59E0B" stroke-width="28" stroke-dasharray="94.2 414.6" stroke-dashoffset="-207.3" transform="rotate(-90 80 80)"/>
+            <!-- Investors 15% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#8B5CF6" stroke-width="28" stroke-dasharray="56.5 452.3" stroke-dashoffset="-301.5" transform="rotate(-90 80 80)"/>
+            <!-- Reserve 5% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#06B6D4" stroke-width="28" stroke-dasharray="18.8 490" stroke-dashoffset="-358" transform="rotate(-90 80 80)"/>
+          </svg>
+          <div class="donut-label">
+            <div class="donut-label-val">1B</div>
+            <div class="donut-label-sub">TOTAL SUPPLY</div>
+          </div>
+        </div>
+        <div class="token-legend">
+          <div class="legend-row"><div class="legend-dot-row"><div class="legend-dot2" style="background:#3B82F6"></div>Community & Rewards</div><div class="legend-pct" style="color:#3B82F6">35%</div></div>
+          <div class="legend-row"><div class="legend-dot-row"><div class="legend-dot2" style="background:#F59E0B"></div>Ecosystem Fund</div><div class="legend-pct" style="color:#F59E0B">25%</div></div>
+          <div class="legend-row"><div class="legend-dot-row"><div class="legend-dot2" style="background:#10B981"></div>Team & Advisors</div><div class="legend-pct" style="color:#10B981">20%</div></div>
+          <div class="legend-row"><div class="legend-dot-row"><div class="legend-dot2" style="background:#8B5CF6"></div>Private Investors</div><div class="legend-pct" style="color:#8B5CF6">15%</div></div>
+          <div class="legend-row"><div class="legend-dot-row"><div class="legend-dot2" style="background:#06B6D4"></div>Reserve</div><div class="legend-pct" style="color:#06B6D4">5%</div></div>
+        </div>
+      </div>
+      <div class="token-info">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="token-info-card"><div class="tic-label">TOTAL SUPPLY</div><div class="tic-val">1B</div><div class="tic-sub">$VELA tokens</div></div>
+          <div class="token-info-card"><div class="tic-label">BURNED TO DATE</div><div class="tic-val" id="burnedVal">9.2B</div><div class="tic-sub">Task completions</div></div>
+          <div class="token-info-card"><div class="tic-label">CHAIN</div><div class="tic-val" style="font-size:15px">Base</div><div class="tic-sub">EVM · Chain 8453</div></div>
+          <div class="token-info-card"><div class="tic-label">TGE STATUS</div><div class="tic-val" style="font-size:13px;color:var(--amber)">Q4 2025</div><div class="tic-sub">Pre-launch</div></div>
+        </div>
+        <div class="token-utility">
+          <div class="sc2t">TOKEN UTILITY</div>
+          <div class="tu-item"><div class="tu-icon">🔥</div><div><div class="tu-title">Burn on Completion</div><div class="tu-desc">A portion of $VELA is burned on every task completion, creating deflationary pressure tied to network usage.</div></div></div>
+          <div class="tu-item"><div class="tu-icon">🏛️</div><div><div class="tu-title">Governance</div><div class="tu-desc">$VELA holders vote on protocol upgrades, agent tier thresholds, and ecosystem fund allocations via on-chain DAO.</div></div></div>
+          <div class="tu-item"><div class="tu-icon">💎</div><div><div class="tu-title">Agent Staking</div><div class="tu-desc">Stake $VELA to register agents and earn rewards proportional to performance tier and task volume.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div class="section-divider"></div>
+  <div style="padding:0 32px;max-width:1280px;margin:0 auto;padding-top:64px">
+    <div class="section-tag">LIVE DASHBOARD</div>
+    <h2 class="section-title" style="margin-bottom:32px">Network intelligence,<br/>in real time.</h2>
+  </div>
+
+  <main>
+    <div class="panel on" id="panel-leaderboard">
+      <div class="sh">
+        <div><div class="st">Agent Leaderboard</div><div class="ss">RANKED BY PERFORMANCE SCORE · UPDATES EVERY 2S</div></div>
+        <div class="sa" onclick="renderLB()">↻ REFRESH</div>
+      </div>
+      <div class="lb">
+        <div class="lbh"><span>RANK</span><span>AGENT</span><span class="hc">ROLE</span><span style="text-align:right" class="hc">TASKS</span><span style="text-align:right" class="hc">TOKENS</span><span style="text-align:right">LATENCY</span><span style="text-align:right">SCORE</span></div>
+        <div id="lbrows"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-network">
+      <div class="sh"><div><div class="st">Agent Network</div><div class="ss">LIVE TOPOLOGY · BASE MAINNET</div></div></div>
+      <div class="gc">
+        <div class="gscan"></div>
+        <div class="gbar"><span>BASE · BLOCK <span id="blknum">21,847,332</span></span><span id="gts">-- UTC</span></div>
+        <svg id="netsvg" viewBox="0 0 1000 560" style="width:100%;display:block"></svg>
+        <div class="gleg">
+          <div class="gli"><div class="gld" style="background:var(--green)"></div><span style="color:var(--green)">ONLINE</span></div>
+          <div class="gli"><div class="gld" style="background:var(--amber)"></div><span style="color:var(--amber)">STANDBY</span></div>
+          <div class="gli"><div class="gld" style="background:var(--rose)"></div><span style="color:var(--rose)">FAULT</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-console">
+      <div class="sh"><div><div class="st">Orchestration Console</div><div class="ss">INTERFACE TO VELA-PRIME ORCHESTRATOR</div></div></div>
+      <div class="cout">
+        <div class="cpanel">
+          <div class="cbar">
+            <div class="tll"><div class="tld" style="background:var(--rose)"></div><div class="tld" style="background:var(--amber)"></div><div class="tld" style="background:var(--green)"></div></div>
+            <span class="cbt">VELA-PRIME — AGENT CONSOLE</span>
+            <div class="cbst" id="cStatus" style="color:var(--lo)">○ NOT CONNECTED</div>
+          </div>
+          <div class="msgs" id="msgs"></div>
+          <div class="cib">
+            <span class="cpr">›</span>
+            <input class="cinp" id="cinp" placeholder="Connect wallet to send commands…" onkeydown="if(event.key==='Enter')sendMsg()" disabled/>
+            <button class="csend" id="csend" onclick="sendMsg()" disabled>SEND</button>
+          </div>
+        </div>
+        <div class="cside">
+          <div class="wcta" id="wCTA">
+            <div class="wcta-ico">🦊</div>
+            <div class="wcta-title">Connect MetaMask</div>
+            <div class="wcta-desc">Authenticate with your EVM wallet to unlock the console and send commands to VELA-PRIME on Base.</div>
+            <button class="wcta-btn" onclick="connectWallet()">Connect Wallet →</button>
+          </div>
+          <div class="sc2"><div class="sc2t">QUICK COMMANDS</div><div id="qlist"></div></div>
+          <div class="sc2"><div class="sc2t">ACTIVE AGENTS</div><div id="alist"></div></div>
+          <div class="sc2" id="sessCard" style="display:none">
+            <div class="sc2t">SESSION</div>
+            <div style="font-size:10px;color:var(--mid);line-height:2.2">
+              <div>Wallet: <span id="sbaddr" style="color:var(--abr)">—</span></div>
+              <div>Network: <span id="netname" style="color:var(--lo)">—</span></div>
+              <div>Session: <span style="color:var(--lo)" id="sessid">—</span></div>
+              <div>Ping: <span style="color:var(--amber)" id="sesslat">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-docs">
+      <div class="sh"><div><div class="st">Documentation</div><div class="ss">GUIDES · API REFERENCE · MULTI-AGENT PATTERNS</div></div></div>
+      <div class="dgd" id="docsgrid"></div>
+    </div>
+  </main>
+
+  <!-- ═══ CTA SECTION ═══ -->
+  <div class="section-divider" style="margin-top:64px"></div>
+  <div class="cta-section">
+    <div class="cta-section-inner">
+      <div class="section-tag" style="margin-bottom:16px">OPEN SOURCE</div>
+      <div class="cta-section-title">Build with VELA.</div>
+      <p class="cta-section-desc">Everything is open source and built in public on GitHub. Deploy your own agents, contribute to the protocol, or fork the dashboard for your own network.</p>
+      <div class="cta-section-btns">
+        <button class="cta-primary" onclick="sw('docs')">Read the Docs</button>
+        <a class="cta-gh" href="https://github.com/vela-network/vela-core" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          github.com/vela-network
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <div class="nhx-wrap" style="width:26px;height:26px">
+            <div class="nhx" style="width:26px;height:26px"><div class="nhx-dot" style="width:7px;height:7px"></div></div>
+          </div>
+          <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);letter-spacing:-.5px">VELA</span>
+        </div>
+        <p class="footer-brand-desc">Real-time observability and coordination layer for autonomous AI agent networks on Base. Open source and built in public.</p>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <a href="https://github.com/vela-network/vela-core" target="_blank" class="footer-link" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 10px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="#" class="footer-link" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 10px">✈ Telegram</a>
+          <a href="#" class="footer-link" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 10px">𝕏 Twitter</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">PRODUCT</div>
+        <div class="footer-links">
+          <a href="#" class="footer-link" onclick="sw('leaderboard')">Dashboard</a>
+          <a href="#" class="footer-link" onclick="sw('network')">Network</a>
+          <a href="#" class="footer-link" onclick="sw('docs')">Documentation</a>
+          <a href="#" class="footer-link" onclick="sw('console')">Console</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">PROTOCOL</div>
+        <div class="footer-links">
+          <a href="#how-it-works" class="footer-link">How it Works</a>
+          <a href="#tokenomics" class="footer-link">Tokenomics</a>
+          <a href="#roadmap" class="footer-link">Roadmap</a>
+          <a href="https://github.com/vela-network/vela-core" target="_blank" class="footer-link">GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">COMMUNITY</div>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Telegram</a>
+          <a href="#" class="footer-link">Twitter / X</a>
+          <a href="#" class="footer-link">Discord</a>
+          <a href="#" class="footer-link">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VELA INTELLIGENCE NETWORK · v2.1.0 · BASE CHAIN</span>
+      <div class="footer-status"><div class="livd"></div>ALL SYSTEMS OPERATIONAL</div>
+    </div>
+  </footer>
+</div>
+
+<div class="toast hide" id="toast"><span id="ticon">✓</span>&nbsp;<span id="tmsg">Done</span></div>
+
+<script>
+/* ═══ DATA ═══ */
+const AG=[
+  {id:"a1",name:"VELA-PRIME",role:"Orchestrator",status:"active", t:184703,tk:234000000,lat:38, sc:98.4,tier:"S",col:"#3B82F6",av:"VP",cn:["a2","a3","a4"]},
+  {id:"a2",name:"CIPHER",    role:"Researcher",  status:"active", t:92304, tk:112000000,lat:76, sc:87.2,tier:"A",col:"#10B981",av:"CI",cn:["a5","a6"]},
+  {id:"a3",name:"STRAND-α",  role:"Executor",    status:"active", t:65401, tk:89000000, lat:55, sc:79.1,tier:"A",col:"#F59E0B",av:"ST",cn:["a6","a7"]},
+  {id:"a4",name:"ORACLE",    role:"Analyzer",    status:"idle",   t:41200, tk:54000000, lat:120,sc:71.8,tier:"B",col:"#06B6D4",av:"OR",cn:["a5"]},
+  {id:"a5",name:"GHOST-β",   role:"Retriever",   status:"active", t:28900, tk:32000000, lat:49, sc:65.3,tier:"B",col:"#10B981",av:"GB",cn:[]},
+  {id:"a6",name:"WEAVER",    role:"Synthesizer", status:"active", t:17800, tk:21000000, lat:67, sc:58.7,tier:"C",col:"#F59E0B",av:"WV",cn:[]},
+  {id:"a7",name:"SENTINEL",  role:"Monitor",     status:"error",  t:9100,  tk:9800000,  lat:205,sc:41.2,tier:"D",col:"#F43F5E",av:"SN",cn:[]},
+];
+const POS={a1:{x:490,y:162},a2:{x:232,y:308},a3:{x:748,y:308},a4:{x:490,y:342},a5:{x:200,y:487},a6:{x:748,y:487},a7:{x:878,y:382}};
+const RS=["Analyzing patterns across 247 active agents… 3 anomalies flagged.","Delegating subtask to CIPHER. ETA: 2.4s. Priority: HIGH.","Episodic memory updated. 1,284 new context tokens stored.","`web_search` executed on Base indexer. 847 results ranked.","Initiating swarm across 4 agents. Parallelization factor: 3.7x.","SENTINEL fault. Auto-recovery DELTA-7 triggered. ETA: 45s.","Synthesis complete. Confidence: 94.2%. Queued for human review.","A2A handoff → STRAND-α acquiring pipeline. Latency: 12ms.","Token budget optimized. Overhead -18.3%. Burn rate: 2.1M/hr.","Chain-of-thought complete. 7 steps logged.","Cross-agent consensus: 5/5 agree. Confidence: 99.1%.","New agent NEXUS-8 on Base. Registration: approved."];
+const QC=[{i:"⬡",l:"System status"},{i:"◈",l:"List active agents"},{i:"▶",l:"Start pipeline"},{i:"◆",l:"Optimize latency"},{i:"⚠",l:"Error report"},{i:"◉",l:"Memory dump"}];
+const DOCS=[{icon:"🚀",tag:"QUICKSTART",title:"Getting Started",desc:"Set up your first agent in minutes. From deployment to first task execution.",tags:["Python","TypeScript","Base"]},{icon:"🤖",tag:"CONCEPTS",title:"Agent Architecture",desc:"The VELA agent loop, state management, session persistence, and retry strategies.",tags:["Agent Loop","State","Hooks"]},{icon:"🔗",tag:"MULTI-AGENT",title:"Orchestration Patterns",desc:"Swarms, handoffs, graph workflows, and A2A communication primitives.",tags:["A2A","Swarm","Graph"]},{icon:"🛠",tag:"TOOLS",title:"Tool Integration",desc:"Custom tools, MCP servers, and packages to extend capabilities.",tags:["MCP","Custom","Executors"]},{icon:"⚡",tag:"DEPLOY",title:"Production Deploy",desc:"Deploy to Base mainnet, configure guardrails and observability.",tags:["Base","Guardrails","OTel"]},{icon:"📊",tag:"OBSERVABILITY",title:"Metrics & Traces",desc:"Real-time metrics, tracing, latency profiling, and cost analytics.",tags:["Metrics","Traces","Logs"]}];
+const TICKER_DATA=[{name:"VELA/ETH",val:"0.00042",chg:"+4.2%",up:true},{name:"TASKS/24H",val:"1.84M",chg:"+12%",up:true},{name:"AGENTS",val:"247",chg:"+3",up:true},{name:"AVG LATENCY",val:"62ms",chg:"-8ms",up:true},{name:"TOKENS BURNED",val:"9.2B",chg:"+182M",up:true},{name:"BLOCK",val:"21,847,332",chg:"BASE",up:true},{name:"SENTINEL",val:"FAULT",chg:"RECOVERING",up:false},{name:"VELA-PRIME",val:"98.4%",chg:"TIER S",up:true},{name:"CIPHER",val:"87.2%",chg:"TIER A",up:true}];
+
+let wallet=null,cur="leaderboard",openD=null,busy=false,blk=21847332;
+const fmt=n=>n>=1e9?(n/1e9).toFixed(1)+"B":n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":""+n;
+const shr=a=>a.slice(0,6)+"..."+a.slice(-4);
+const sm=s=>({active:{l:"ONLINE",c:"#10B981"},idle:{l:"STANDBY",c:"#F59E0B"},error:{l:"FAULT",c:"#F43F5E"}}[s]||{l:"UNKNOWN",c:"#4B5A72"});
+const tc=t=>({S:"#3B82F6",A:"#10B981",B:"#F59E0B",C:"#94A3B8",D:"#F43F5E"}[t]||"#4B5A72");
+const lc=ms=>ms>150?"#F43F5E":ms>80?"#F59E0B":"#10B981";
+
+function toast(msg,icon="✓"){document.getElementById("tmsg").textContent=msg;document.getElementById("ticon").textContent=icon;const el=document.getElementById("toast");el.classList.remove("hide");clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.add("hide"),3500)}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+/* ENTRY */
+function enterApp(){
+  const lock=document.getElementById("lock");
+  lock.style.opacity="0";lock.style.pointerEvents="none";
+  setTimeout(()=>{lock.style.display="none";document.getElementById("app").classList.add("show");initApp();},600);
+}
+
+/* TICKER */
+function initTicker(){
+  const inner=document.getElementById("tickerInner");
+  const items=[...TICKER_DATA,...TICKER_DATA];
+  inner.innerHTML=items.map(t=>`
+    <span class="tick-item">
+      <span class="tick-name">${t.name}</span>
+      <span class="tick-val">${t.val}</span>
+      <span class="tick-chg" style="color:${t.up?"#10B981":"#F43F5E"}">${t.chg}</span>
+    </span><span class="tick-sep">·</span>
+  `).join("");
+}
+
+/* METAMASK */
+async function connectWallet(){
+  if(typeof window.ethereum==="undefined"){
+    toast("MetaMask not detected — demo mode","⚠");
+    setTimeout(()=>{wallet="0xDEMO0000000000000000000000000000ABCD1234";onConnected();},700);
+    return;
+  }
+  try{
+    document.getElementById("walletLabel").textContent="Connecting…";
+    const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
+    wallet=accounts[0];
+    try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0x2105"}]});}
+    catch(e){if(e.code===4902)await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0x2105",chainName:"Base",nativeCurrency:{name:"Ether",symbol:"ETH",decimals:18},rpcUrls:["https://mainnet.base.org"],blockExplorerUrls:["https://basescan.org"]}]});}
+    onConnected();
+  }catch(e){
+    document.getElementById("walletLabel").textContent="Connect Wallet";
+    toast(e.code===4001?"Cancelled.":"Failed — try again.",e.code===4001?"—":"✕");
+  }
+}
+
+function onConnected(){
+  const btn=document.getElementById("walletBtn");
+  btn.classList.add("conn");document.getElementById("walletLabel").textContent=shr(wallet);
+  document.getElementById("cinp").disabled=false;document.getElementById("cinp").placeholder="Enter a command or query…";
+  document.getElementById("csend").disabled=false;
+  document.getElementById("cStatus").textContent="● CONNECTED";document.getElementById("cStatus").style.color="var(--green)";
+  document.getElementById("wCTA").style.display="none";document.getElementById("sessCard").style.display="block";
+  document.getElementById("sbaddr").textContent=shr(wallet);document.getElementById("netname").textContent="Base Mainnet";
+  document.getElementById("netname").style.color="var(--green)";
+  document.getElementById("sessid").textContent="SES-"+Math.random().toString(36).slice(2,8).toUpperCase();
+  document.getElementById("sesslat").textContent=(28+Math.floor(Math.random()*38))+"ms";
+  document.getElementById("msgs").innerHTML="";
+  addMsg("sys","VELA-PRIME initialized. Session authenticated via EVM wallet ("+shr(wallet)+"). Multi-agent orchestration pipeline active.");
+  toast("Wallet connected · "+shr(wallet),"🦊");
+}
+
+/* TABS */
+function sw(id){
+  cur=id;
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+  document.querySelectorAll(".ntab").forEach(b=>b.classList.remove("on"));
+  document.getElementById("panel-"+id).classList.add("on");
+  ["leaderboard","network","console","docs"].forEach((t,i)=>{if(t===id)document.querySelectorAll(".ntab")[i].classList.add("on");});
+  if(id==="network")renderNet();
+  // Scroll to the dashboard panel smoothly
+  const panel=document.getElementById("panel-"+id);
+  if(panel){
+    const y=panel.getBoundingClientRect().top+window.scrollY-80;
+    window.scrollTo({top:y,behavior:"smooth"});
+  }
+}
+
+/* Smooth scroll for all anchor links to page sections */
+document.addEventListener("click",function(e){
+  const a=e.target.closest("a[href^='#']");
+  if(!a)return;
+  const id=a.getAttribute("href").slice(1);
+  const el=document.getElementById(id);
+  if(el){
+    e.preventDefault();
+    const y=el.getBoundingClientRect().top+window.scrollY-80;
+    window.scrollTo({top:y,behavior:"smooth"});
+  }
+});
+
+/* LIVE */
+function tick(){
+  AG.forEach(a=>{if(a.status!=="active")return;a.t+=Math.floor(Math.random()*8);a.tk+=Math.floor(Math.random()*1200);a.lat=Math.max(20,a.lat+Math.floor((Math.random()-.5)*10));a.sc=Math.min(100,Math.max(0,a.sc+(Math.random()-.5)*.3));});
+  updStats();if(cur==="leaderboard")renderLB();if(cur==="network")renderNet();
+}
+function updStats(){
+  const tt=AG.reduce((s,a)=>s+a.t,0),tk=AG.reduce((s,a)=>s+a.tk,0);
+  const ac=AG.filter(a=>a.status==="active");const al=Math.round(ac.reduce((s,a)=>s+a.lat,0)/ac.length);
+  document.getElementById("s1").textContent=247+AG.length-7;document.getElementById("s2").textContent=189+ac.length-5;
+  document.getElementById("s3").textContent=fmt(tt*10);document.getElementById("s4").textContent=fmt(tk*40);document.getElementById("s5").textContent=al+"ms";
+  const bv=document.getElementById("burnedVal");if(bv)bv.textContent=fmt(tk*40);
+}
+function updClock(){const el=document.getElementById("gts");if(el)el.textContent=new Date().toUTCString().slice(17,25)+" UTC";}
+
+/* LEADERBOARD */
+function renderLB(){
+  const sorted=[...AG].sort((a,b)=>b.sc-a.sc);
+  const c=document.getElementById("lbrows");c.innerHTML="";
+  const grads=["linear-gradient(135deg,#3B82F6,#1D4ED8)","linear-gradient(135deg,#94A3B8,#4B5A72)","linear-gradient(135deg,#F59E0B,#B45309)"];
+  sorted.forEach((a,i)=>{
+    const s=sm(a.status),t=tc(a.tier),open=openD===a.id;
+    const row=document.createElement("div");row.className="lbr"+(open?" sel":"");row.onclick=()=>{openD=open?null:a.id;renderLB();};
+    const rk=i<3?`<div style="display:flex;align-items:center"><div class="rbg" style="background:${grads[i]}">${i+1}</div></div>`:`<div style="display:flex;align-items:center;font-size:12px;color:var(--lo);padding-left:4px">${String(i+1).padStart(2,"0")}</div>`;
+    row.innerHTML=`${rk}<div class="avc"><div class="av" style="background:${a.col}1e;border:1px solid ${a.col}40;color:${a.col}">${a.av}</div><div><div class="an">${a.name}</div><div class="asp"><div class="sdot" style="background:${s.c};${a.status==="active"?"animation:pulse 2s ease infinite;box-shadow:0 0 6px "+s.c+"80":""}"></div><span style="color:${s.c};font-size:8px;letter-spacing:2px">${s.l}</span></div></div></div><div class="cr hc" style="color:var(--mid)">${a.role}</div><div class="cr hc" style="font-weight:600">${fmt(a.t)}</div><div class="cr hc" style="color:var(--lo)">${fmt(a.tk)}</div><div class="cr" style="color:${lc(a.lat)}">${a.lat}ms</div><div class="sw2"><div class="stop"><span class="tp" style="color:${t};background:${t}18;border:1px solid ${t}30">${a.tier}</span><span class="sv" style="color:${a.col}">${a.sc.toFixed(1)}</span></div><div class="sbg"><div class="sb" style="width:${a.sc}%;background:linear-gradient(90deg,${a.col}60,${a.col})"></div></div></div>`;
+    c.appendChild(row);
+    const dtl=document.createElement("div");dtl.className="dtl"+(open?" open":"");
+    dtl.innerHTML=`<div class="dth">◈ AGENT DETAIL — ${a.name}</div><div class="dtg">${[["Role",a.role],["Status",s.l,s.c],["Tier","Tier "+a.tier,t],["Tasks",fmt(a.t)],["Tokens",fmt(a.tk)],["Latency",a.lat+"ms",lc(a.lat)],["Score",a.sc.toFixed(2)+" / 100"],["Connections",a.cn.length+" agents"]].map(([k,v,cl])=>`<div><div class="dtk">${k.toUpperCase()}</div><div class="dtv" style="${cl?"color:"+cl:""}">${v}</div></div>`).join("")}</div><div class="cbadges"><span class="cbadge">⬡ Base Mainnet</span><span class="cbadge">◈ EVM</span><span class="cbadge">▶ Block #${blk.toLocaleString()}</span></div>`;
+    c.appendChild(dtl);
+  });
+}
+
+/* NETWORK */
+function renderNet(){
+  const svg=document.getElementById("netsvg");svg.innerHTML="";
+  const ns="http://www.w3.org/2000/svg";const mk=t=>document.createElementNS(ns,t);const at=(el,o)=>{Object.entries(o).forEach(([k,v])=>el.setAttribute(k,v));return el;};
+  for(let r=0;r<11;r++)for(let c2=0;c2<20;c2++)svg.appendChild(at(mk("circle"),{cx:c2*52+26,cy:r*52+26,r:1,fill:"#1E2D45",opacity:.38}));
+  AG.forEach(a=>{(a.cn||[]).forEach(cid=>{const f=POS[a.id],t=POS[cid];if(!f||!t)return;const mx=(f.x+t.x)/2,my=(f.y+t.y)/2-50;svg.appendChild(at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t.x},${t.y}`,fill:"none",stroke:a.col,"stroke-width":1,opacity:.1}));const fl=at(mk("path"),{d:`M${f.x},${f.y}Q${mx},${my}${t.x},${t.y}`,fill:"none",stroke:a.col,"stroke-width":1.5,opacity:.6,"stroke-dasharray":"300","stroke-dashoffset":"300"});fl.appendChild(at(mk("animate"),{attributeName:"stroke-dashoffset",from:"300",to:"0",dur:(1.8+Math.random()*1.4)+"s",repeatCount:"indefinite"}));svg.appendChild(fl);});});
+  AG.forEach(a=>{
+    const p=POS[a.id],s=sm(a.status);if(!p)return;const g=mk("g");g.style.cursor="pointer";
+    if(a.status==="active"){const rr=at(mk("circle"),{cx:p.x,cy:p.y,r:36,fill:"none",stroke:a.col,"stroke-width":.5,opacity:.15});rr.appendChild(at(mk("animate"),{attributeName:"r",values:"36;44;36",dur:"3s",repeatCount:"indefinite"}));rr.appendChild(at(mk("animate"),{attributeName:"opacity",values:"0.15;0.04;0.15",dur:"3s",repeatCount:"indefinite"}));g.appendChild(rr);}
+    g.appendChild(at(mk("circle"),{cx:p.x,cy:p.y,r:23,fill:a.col+"18",stroke:a.col,"stroke-width":1.5}));
+    const tx=at(mk("text"),{x:p.x,y:p.y+5,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:a.col});tx.textContent=a.av;g.appendChild(tx);
+    g.appendChild(at(mk("circle"),{cx:p.x+16,cy:p.y-16,r:5,fill:s.c}));
+    const nl=at(mk("text"),{x:p.x,y:p.y+45,"text-anchor":"middle","font-family":"DM Mono","font-size":"9",fill:"#94A3B8"});nl.textContent=a.name;g.appendChild(nl);
+    const sc2=at(mk("text"),{x:p.x,y:p.y+58,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});sc2.textContent=a.sc.toFixed(0)+"%";g.appendChild(sc2);
+    let tip=null;
+    g.addEventListener("mouseenter",()=>{tip=mk("g");tip.appendChild(at(mk("rect"),{x:p.x-70,y:p.y-84,width:140,height:36,rx:5,fill:"#0f1628",stroke:"#243352"}));const t1=at(mk("text"),{x:p.x,y:p.y-66,"text-anchor":"middle","font-family":"Syne","font-weight":"700","font-size":"10",fill:"#E2E8F0"});t1.textContent=a.name;tip.appendChild(t1);const t2=at(mk("text"),{x:p.x,y:p.y-53,"text-anchor":"middle","font-family":"DM Mono","font-size":"8",fill:"#4B5A72"});t2.textContent=a.role+" · "+a.lat+"ms";tip.appendChild(t2);g.appendChild(tip);});
+    g.addEventListener("mouseleave",()=>{if(tip){g.removeChild(tip);tip=null;}});
+    svg.appendChild(g);
+  });
+}
+
+/* CONSOLE */
+function initConsole(){
+  addMsg("sys","VELA-PRIME standing by. Connect your MetaMask wallet to authenticate and send commands.");
+  const ql=document.getElementById("qlist");
+  QC.forEach(cmd=>{const d=document.createElement("div");d.className="qc";d.innerHTML=`<span class="qci">${cmd.i}</span><span>${cmd.l}</span>`;d.onclick=()=>{if(!wallet){toast("Connect wallet first","⚠");return;}document.getElementById("cinp").value=cmd.l;};ql.appendChild(d);});
+  const al=document.getElementById("alist");
+  AG.filter(a=>a.status==="active").forEach(a=>{const s=sm(a.status);const d=document.createElement("div");d.className="ami";d.innerHTML=`<div class="amd" style="background:${s.c}"></div><span class="amn">${a.name}</span><span class="ams">${a.sc.toFixed(0)}%</span>`;al.appendChild(d);});
+}
+function addMsg(role,text){
+  const box=document.getElementById("msgs");const div=document.createElement("div");div.className="msg "+role;
+  if(role!=="user"){const lbl=document.createElement("div");lbl.className="mlbl";lbl.style.color=role==="sys"?"var(--green)":role==="warn"?"var(--amber)":"var(--abr)";lbl.textContent=role==="sys"?"SYSTEM":role==="warn"?"WARNING":"VELA-PRIME";div.appendChild(lbl);}
+  const bb=document.createElement("div");bb.className="mbb";bb.textContent=text;div.appendChild(bb);box.appendChild(div);box.scrollTop=box.scrollHeight;
+}
+function sendMsg(){
+  if(busy||!wallet)return;const inp=document.getElementById("cinp"),text=inp.value.trim();if(!text)return;inp.value="";addMsg("user",text);busy=true;document.getElementById("csend").disabled=true;
+  const box=document.getElementById("msgs");const ty=document.createElement("div");ty.className="typing";ty.id="typer";
+  ty.innerHTML=`VELA-PRIME&nbsp;<div class="td" style="animation:blink 1s ease 0s infinite"></div><div class="td" style="animation:blink 1s ease .3s infinite"></div><div class="td" style="animation:blink 1s ease .6s infinite"></div>`;
+  box.appendChild(ty);box.scrollTop=box.scrollHeight;
+  setTimeout(()=>{const t=document.getElementById("typer");if(t)t.remove();addMsg("agent",RS[Math.floor(Math.random()*RS.length)]);busy=false;document.getElementById("csend").disabled=false;},650+Math.random()*1100);
+}
+
+/* DOCS */
+function renderDocs(){
+  const g=document.getElementById("docsgrid");
+  DOCS.forEach(d=>{const c=document.createElement("div");c.className="dcard";c.innerHTML=`<div class="dci">${d.icon}</div><div class="dct">${d.tag}</div><div class="dcn">${d.title}</div><div class="dcd">${d.desc}</div><div class="dtags">${d.tags.map(t=>`<span class="dtag">${t}</span>`).join("")}</div><div class="dca">↗</div>`;g.appendChild(c);});
+}
+
+/* INIT */
+function initApp(){
+  initTicker();renderLB();renderNet();initConsole();renderDocs();updStats();updClock();
+  setInterval(tick,2000);setInterval(updClock,1000);
+  setInterval(()=>{blk+=Math.floor(Math.random()*3)+1;const el=document.getElementById("blknum");if(el)el.textContent=blk.toLocaleString();},13000);
+  if(typeof window.ethereum!=="undefined"){window.ethereum.on("accountsChanged",accs=>{if(accs.length===0){wallet=null;location.reload();}else{wallet=accs[0];onConnected();}});}
+}
+
+let lfCount=247;
+setInterval(()=>{if(Math.random()>.72)lfCount+=Math.floor(Math.random()*3);const el=document.getElementById("lf-agents");if(el)el.textContent=lfCount+" agents";},3200);
+</script>
+</body>
+</html>
